@@ -1,0 +1,44 @@
+<odoo>
+  <data>
+    <record id="mrp_generate_product_wizard_form" model="ir.ui.view">
+        <field name="name">generate.product.wizard.form</field>
+        <field name="model">generate.product.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Generate New Product" >
+              <sheet>
+                <separator string="Generate New Product" colspan="4"/>
+                  <group>
+                      <field name="name" />
+                      <field name="route_ids"  options="{'no_create_edit': True,'no_quick_create':True}" widget="many2many_tags"/>
+                      <field name="tracking"/>
+                      <field name="uom_id" options="{'no_create_edit': True, 'no_create': True, 'no_open': True}" />
+                      <field name="categ_id" options="{'no_create_edit': True, 'no_create': True, 'no_open': True}" />
+                  </group>
+                  <div align="center"><footer>
+                      <button name="create_product" string="Create" type="object" class="oe_highlight"/>
+                      <span style="padding-left: 1%;"></span>
+                      <button string="_Cancel" class="btn-default" special="cancel" />
+                  </footer></div>
+                  
+              </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="mrp_generate_product_wizard_action" model="ir.actions.act_window">
+            <field name="name">Generate New product</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">generate.product.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="mrp_generate_product_wizard_form"/>
+            <field name="target">new</field>
+        </record>
+        
+    <menuitem
+        id="menu_generate_new_product_wizard"
+        name="Generate New Product"
+        action="mrp_generate_product_wizard_action"
+        parent="mrp_plm.menu_mrp_plm_master_data"
+        sequence="30"/>
+  </data>
+</odoo>

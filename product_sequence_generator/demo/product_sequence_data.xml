@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Sequences for product.template -->
+        <record id="seq_product_template" model="ir.sequence">
+            <field name="name">Product Part</field>
+            <field name="code">product.part</field>
+            <field name="prefix">A</field>
+            <field name="suffix">-A</field>
+            <field name="padding">6</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+    </data>
+</odoo>
