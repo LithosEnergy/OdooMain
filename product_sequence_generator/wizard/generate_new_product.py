@@ -4,6 +4,7 @@ from odoo import models, fields, api, _
 
 class Generate_Product_Wizard(models.TransientModel):
     _name = 'generate.product.wizard'
+    _description = 'Generate Product Wizard'
 
     @api.model
     def _get_buy_route(self):

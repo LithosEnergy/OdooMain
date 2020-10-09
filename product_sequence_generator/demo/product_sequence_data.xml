@@ -3,7 +3,7 @@
     <data>
 
         <!-- Sequences for product.template -->
-        <record id="seq_product_template" model="ir.sequence">
+        <record id="seq_product_part" model="ir.sequence">
             <field name="name">Product Part</field>
             <field name="code">product.part</field>
             <field name="prefix">A</field>
