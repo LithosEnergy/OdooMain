@@ -9,8 +9,8 @@
     'description': """
         Product sequence Generat in Internal Refrence
     """,
-     'author': "Techspawn Solutions",
-    'website': "http://www.techspawn.com",
+    'author': "S4 Solutions, LLC",
+    'website': "https://www.sfour.io/",
     'category': 'Manufacturing',
     'version': '13.0.0',
     'depends': ['base','mrp_plm', 'purchase_stock'],
