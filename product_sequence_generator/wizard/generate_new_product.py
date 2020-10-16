@@ -58,6 +58,7 @@ class Generate_Product_Wizard(models.TransientModel):
                 'uom_id': self.uom_id.id,
                 'uom_po_id': self.uom_id.id,
                 'default_code': sequence,
+                'sale_ok': False,
                 'categ_id': self.categ_id.id}
         
         product = self.env['product.template'].create(vals)
