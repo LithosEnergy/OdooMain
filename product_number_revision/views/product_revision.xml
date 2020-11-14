@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<odoo>
+		<data>
+
+      <record id="mrp_eco_product_revision_tree" model="ir.ui.view">
+          <field name="name">product_revision_tree</field>
+          <field name="model">product.revision</field>
+          <field name="type">tree</field>
+          <field eval="8" name="priority"/>
+          <field name="arch" type="xml">
+          <tree string="product revision">
+            <field name="name"/>
+            <field name="description"/>							
+            <field name="sequence"/>
+          </tree>
+          </field>
+        </record>
+
+
+          <record id="mrp_eco_product_revision_form" model="ir.ui.view">
+	            <field name="name">product_revision_form</field>
+	            <field name="model">product.revision</field>
+				      <field name="type">form</field>
+	            <field name="arch" type="xml">
+	                 <form string="product revision">
+                    <sheet>
+                        <group col="2">
+                            <field name="name"/>
+                            <field name="description"/>		
+                            <field name="sequence"/>
+                            <field name="user_id"/>							
+                        </group>
+                    </sheet>
+                </form>
+	           	</field>
+	        </record>
+
+
+        <record id="mrp_eco_product_revision" model="ir.actions.act_window">
+          <field name="name">Product Revision</field>
+          <field name="res_model">product.revision</field>
+          <field name="view_mode">tree,form</field>
+          <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+              create a new product revision
+            </p>
+          </field>
+        </record>     
+
+
+        <menuitem
+        id="menu_mrp_plm_product_revision"
+        name="Product Revision"
+        action="mrp_eco_product_revision"
+        parent="mrp_plm.menu_mrp_plm_master_data"
+        sequence="30"/>    
+
+         <record model="ir.ui.view" id="product_template_form_view_procurement_button_inherited">
+            <field name="name">product_template_procurement_inherited</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="stock.product_template_form_view_procurement_button"/>
+            <field name="arch" type="xml">
+              <xpath expr="//header" position='inside'>          
+                <button string="Generate New Revision" type="object" class="btn-success"
+                        name="action_genrate_new_revision"
+                        attrs="{'invisible': [('type', '!=', 'product')]}"/>                
+              </xpath>
+            </field>
+          </record>       
+        
+    </data>
+</odoo>
