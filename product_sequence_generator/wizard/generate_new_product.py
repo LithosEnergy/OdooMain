@@ -53,7 +53,7 @@ class Generate_Product_Wizard(models.TransientModel):
     cots = fields.Boolean("COTS")
     vendor = fields.Many2one('res.partner',string="Vendor",domain="[('supplier_rank', '>', 0)]")
     vendor_product_code = fields.Char("Vendor Product Code")
-    manufacturer = fields.Char("Manufacturer")
+    manufacturer = fields.Many2one('res.partner',string="Manufacturer",domain="[('manufacturer', '=', True)]")
     manufacturer_part_number = fields.Char("Manufacturer Part Number")
     
     
@@ -85,6 +85,9 @@ class Generate_Product_Wizard(models.TransientModel):
             })
 
         product.production_state = production_state[0].id
+        product.manufacturer = self.manufacturer
+        product.manufacturer_part_number = self.manufacturer_part_number
+
         return {
                 'type': 'ir.actions.act_window',
                 'res_model': 'product.template',
