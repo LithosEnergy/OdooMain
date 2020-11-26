@@ -9,105 +9,106 @@ class inherited_mrp_eco(models.Model):
     
     def write(self, vals):
         eco = super(inherited_mrp_eco, self).write(vals)
-        if not self.affected_part_line:
-            raise Warning(_("At least one product must be specified for this type of ECO."))
-        if self.affected_part_line:
-            for line in self.affected_part_line:
-                if not(line.generate_revision or line.production_state):
-                    raise Warning(_("You must specify a new Production State or that a new Revision is to be generated for all products on the 'Affected Parts' tab before applying changes for this ECO."))
-                else:
-                    if line.production_state:
-                        line.affected_product_id.production_state = line.production_state
-                    if line.next_revision:
-                        line.affected_product_id.version = line.next_revision
+        if self.type == "product":
+            if not self.affected_part_line:
+                raise Warning(_("At least one product must be specified for this type of ECO."))
+            if self.affected_part_line:
+                for line in self.affected_part_line:
+                    if not(line.generate_revision or line.production_state):
+                        raise Warning(_("You must specify a new Production State or that a new Revision is to be generated for all products on the 'Affected Parts' tab before applying changes for this ECO."))
+                    else:
+                        if line.production_state:
+                            line.affected_product_id.production_state = line.production_state
+                        if line.next_revision:
+                            line.affected_product_id.version = line.next_revision
 
-                    if line.generate_revision:                        
-                        # revision_line_ids = self.env['product.revisions'].create({'revision':line.affected_product_id.version,'document_wizard_line':line.document_wizard_line,'notes':line.notes})
-                        # for wizard_line in line.document_wizard_line:
+                        if line.generate_revision:                        
+                            # revision_line_ids = self.env['product.revisions'].create({'revision':line.affected_product_id.version,'document_wizard_line':line.document_wizard_line,'notes':line.notes})
+                            # for wizard_line in line.document_wizard_line:
 
-                        revision_lst = []
-                        for revision_line in line.affected_product_id.product_revision_line:
-                            revision_lst.append(revision_line.revision)
-                        if line.next_revision in revision_lst:  
+                            revision_lst = []
                             for revision_line in line.affected_product_id.product_revision_line:
-                                if line.next_revision == revision_line.revision:                   
+                                revision_lst.append(revision_line.revision)
+                            if line.next_revision in revision_lst:  
+                                for revision_line in line.affected_product_id.product_revision_line:
+                                    if line.next_revision == revision_line.revision:                   
 
 
-                                    wizard_line_lst = []
-                                    for wizard_line in line.document_wizard_line:
-                                        wizard_line_lst.append((0, 0, {
-                                            'item_number': wizard_line.item_number,
-                                            'upload_document_name':wizard_line.upload_document_name,
-                                            'upload_document':wizard_line.upload_document,
-                                            'full_url':wizard_line.full_url,
-                                        }))
+                                        wizard_line_lst = []
+                                        for wizard_line in line.document_wizard_line:
+                                            wizard_line_lst.append((0, 0, {
+                                                'item_number': wizard_line.item_number,
+                                                'upload_document_name':wizard_line.upload_document_name,
+                                                'upload_document':wizard_line.upload_document,
+                                                'full_url':wizard_line.full_url,
+                                            }))
 
-                                    vals = {
-                                        'revision':line.affected_product_id.version,
-                                        # 'document_wizard_line':wizard_line_lst,
-                                        'notes':line.notes
-                                    }
-                                    # line.affected_product_id.update({'product_revision_line':[(0,0,vals)]})
-                                    revision_line.revision = vals['revision']
-                                    revision_line.notes = vals['notes']
-                                    revision_line.document_wizard_line.unlink()
-                                    revision_line.document_wizard_line = wizard_line_lst
-                                    # line.affected_product_id.product_revision_line[-1].document_wizard_line =  wizard_line_lst
-                        else:
-                            wizard_line_lst = []
-                            for wizard_line in line.document_wizard_line:
-                                wizard_line_lst.append((0, 0, {
-                                    'item_number': wizard_line.item_number,
-                                    'upload_document_name':wizard_line.upload_document_name,
-                                    'upload_document':wizard_line.upload_document,
-                                    'full_url':wizard_line.full_url,
-                                }))
+                                        vals = {
+                                            'revision':line.affected_product_id.version,
+                                            # 'document_wizard_line':wizard_line_lst,
+                                            'notes':line.notes
+                                        }
+                                        # line.affected_product_id.update({'product_revision_line':[(0,0,vals)]})
+                                        revision_line.revision = vals['revision']
+                                        revision_line.notes = vals['notes']
+                                        revision_line.document_wizard_line.unlink()
+                                        revision_line.document_wizard_line = wizard_line_lst
+                                        # line.affected_product_id.product_revision_line[-1].document_wizard_line =  wizard_line_lst
+                            else:
+                                wizard_line_lst = []
+                                for wizard_line in line.document_wizard_line:
+                                    wizard_line_lst.append((0, 0, {
+                                        'item_number': wizard_line.item_number,
+                                        'upload_document_name':wizard_line.upload_document_name,
+                                        'upload_document':wizard_line.upload_document,
+                                        'full_url':wizard_line.full_url,
+                                    }))
 
-                            vals = {
-                                'revision':line.affected_product_id.version,
-                                # 'document_wizard_line':wizard_line_lst,
-                                'notes':line.notes
-                            }
-                            line.affected_product_id.write({'product_revision_line':[(0,0,vals)]})
-                            line.affected_product_id.product_revision_line[-1].document_wizard_line =  wizard_line_lst
+                                vals = {
+                                    'revision':line.affected_product_id.version,
+                                    # 'document_wizard_line':wizard_line_lst,
+                                    'notes':line.notes
+                                }
+                                line.affected_product_id.write({'product_revision_line':[(0,0,vals)]})
+                                line.affected_product_id.product_revision_line[-1].document_wizard_line =  wizard_line_lst
 
 
 
-                    # if line.generate_revision: 
-                        
-                    #     revision_lst = []
-                    #     for revision_line in line.affected_product_id.product_revision_line:
-                    #         revision_lst.append(revision_line.revision)
-                    #     if line.next_revision in revision_lst:  
-                    #         for revision_line in line.affected_product_id.product_revision_line:
-                    #             if line.next_revision == revision_line.revision:                        
-                    #                 vals = {
-                    #                     'revision':line.affected_product_id.version,
-                    #                     'document_wizard_line':line.document_wizard_line,
-                    #                     'notes':line.notes
-                    #                 }
-                    #                 # revision_line.write([(0,0,vals)])
-                    #                 revision_line.write({'document_wizard_line':line.document_wizard_line,'notes':line.notes,'revision':line.affected_product_id.version})
-                    #                 # revision_line.write({'notes':line.notes,'revision':line.affected_product_id.version})
-                                            
-                    #     else:
-
-                    #         vals = {
-                    #             'revision':line.affected_product_id.version,
-                    #             'document_wizard_line':line.document_wizard_line,
-                    #             'notes':line.notes
-                    #         }
-                    #         line.affected_product_id.write({'product_revision_line':[(0,0,vals)]})
-                            # vals = {
-                            #     'revision':line.affected_product_id.version,
-                            #     # 'document_wizard_line':(0,0,line.document_wizard_line.ids),
-                            #     'notes':line.notes
-                            # }
-                            # create_revision_id = self.env['product.revisions'].create(vals)
+                        # if line.generate_revision: 
                             
-                            # line.affected_product_id.product_revision_line.ids.append(create_revision_id.id)
-                                      
-                                                    
+                        #     revision_lst = []
+                        #     for revision_line in line.affected_product_id.product_revision_line:
+                        #         revision_lst.append(revision_line.revision)
+                        #     if line.next_revision in revision_lst:  
+                        #         for revision_line in line.affected_product_id.product_revision_line:
+                        #             if line.next_revision == revision_line.revision:                        
+                        #                 vals = {
+                        #                     'revision':line.affected_product_id.version,
+                        #                     'document_wizard_line':line.document_wizard_line,
+                        #                     'notes':line.notes
+                        #                 }
+                        #                 # revision_line.write([(0,0,vals)])
+                        #                 revision_line.write({'document_wizard_line':line.document_wizard_line,'notes':line.notes,'revision':line.affected_product_id.version})
+                        #                 # revision_line.write({'notes':line.notes,'revision':line.affected_product_id.version})
+                                                
+                        #     else:
+
+                        #         vals = {
+                        #             'revision':line.affected_product_id.version,
+                        #             'document_wizard_line':line.document_wizard_line,
+                        #             'notes':line.notes
+                        #         }
+                        #         line.affected_product_id.write({'product_revision_line':[(0,0,vals)]})
+                                # vals = {
+                                #     'revision':line.affected_product_id.version,
+                                #     # 'document_wizard_line':(0,0,line.document_wizard_line.ids),
+                                #     'notes':line.notes
+                                # }
+                                # create_revision_id = self.env['product.revisions'].create(vals)
+                                
+                                # line.affected_product_id.product_revision_line.ids.append(create_revision_id.id)
+                                        
+                                                        
 
         
         return eco
