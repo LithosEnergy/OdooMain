@@ -2,13 +2,13 @@
 	<odoo>
 		<data>
 
-      <record id="mrp_eco_product_revision_tree" model="ir.ui.view">
-          <field name="name">product_revision_tree</field>
-          <field name="model">product.revision</field>
+      <record id="mrp_eco_product_variant_tree" model="ir.ui.view">
+          <field name="name">product_variant_tree</field>
+          <field name="model">product.variant</field>
           <field name="type">tree</field>
           <field eval="8" name="priority"/>
           <field name="arch" type="xml">
-          <tree string="product revision">
+          <tree string="product variant">
             <field name="name"/>
             <field name="description"/>							
             <field name="sequence"/>
@@ -17,12 +17,12 @@
         </record>
 
 
-          <record id="mrp_eco_product_revision_form" model="ir.ui.view">
-	            <field name="name">product_revision_form</field>
-	            <field name="model">product.revision</field>
+          <record id="mrp_eco_product_variant_form" model="ir.ui.view">
+	            <field name="name">product_variant_form</field>
+	            <field name="model">product.variant</field>
 				      <field name="type">form</field>
 	            <field name="arch" type="xml">
-	                 <form string="product revision">
+	                 <form string="product variant">
                     <sheet>
                         <group col="2">
                             <field name="name"/>
@@ -36,23 +36,23 @@
 	        </record>
 
 
-        <record id="mrp_eco_product_revision" model="ir.actions.act_window">
-          <field name="name">Product Revision</field>
-          <field name="res_model">product.revision</field>
+        <record id="mrp_eco_product_variant" model="ir.actions.act_window">
+          <field name="name">Product Variant</field>
+          <field name="res_model">product.variant</field>
           <field name="view_mode">tree,form</field>
           <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
-              create a new product revision
+              create a new product variant
             </p>
           </field>
         </record>     
 
 
         <menuitem
-        id="menu_mrp_plm_product_revision"
-        name="Product Revision"
-        action="mrp_eco_product_revision"
-        parent="mrp_plm.menu_mrp_plm_master_data"
+        id="menu_mrp_plm_product_variant"
+        name="Product Variant"
+        action="mrp_eco_product_variant"
+        parent="mrp_plm.menu_mrp_plm_configuration"
         sequence="30"/>    
 
          <record model="ir.ui.view" id="product_template_form_view_procurement_button_inherited">
@@ -61,8 +61,8 @@
             <field name="inherit_id" ref="stock.product_template_form_view_procurement_button"/>
             <field name="arch" type="xml">
               <xpath expr="//header" position='inside'>          
-                <button string="Generate New Revision" type="object" class="btn-success"
-                        name="action_genrate_new_revision"
+                <button string="Generate New Variant" type="object" class="btn-success"
+                        name="action_genrate_new_variant"
                         attrs="{'invisible': [('type', '!=', 'product')]}"/>                
               </xpath>
             </field>

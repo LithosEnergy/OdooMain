@@ -12,7 +12,7 @@
                 </xpath>
                 
                 <xpath expr="///page[@name='purchase']" position="inside">
-                <group string="Production State">
+                <group string="Manufacturer Information">
                     <group>
                         <field name='manufacturer' options='{"no_open": True,"no_create": 1, "no_create_edit": 1}'/>
                         <field name='manufacturer_part_number'/>
