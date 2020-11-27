@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<odoo>
+		<data>
+
+      <record id="mrp_eco_production_state_tree" model="ir.ui.view">
+          <field name="name">production_state_tree</field>
+          <field name="model">production.state</field>
+          <field name="type">tree</field>
+          <field eval="8" name="priority"/>
+          <field name="arch" type="xml">
+          <tree string="production state">
+            <field name="name"/>
+            <field name="description"/>
+            <field name="default"/>
+            <field name="user_id"/>
+
+            						
+          </tree>
+          </field>
+        </record>
+
+
+          <record id="mrp_eco_production_state_form" model="ir.ui.view">
+	            <field name="name">production_state_form</field>
+	            <field name="model">production.state</field>
+				      <field name="type">form</field>
+	            <field name="arch" type="xml">
+	                 <form string="production state">
+                    <sheet>
+                        <group col="2">
+                            <field name="name"/>
+                            <field name="description"/>
+                            <field name="default"/>	
+                            <field name="user_id"/>
+                        </group>
+                    </sheet>
+                </form>
+	           	</field>
+	        </record>
+
+
+        <record id="mrp_eco_production_state" model="ir.actions.act_window">
+          <field name="name">Production State</field>
+          <field name="res_model">production.state</field>
+          <field name="view_mode">tree,form</field>
+          <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+              create a new production state
+            </p>
+          </field>
+        </record>   
+
+
+        
+
+        <menuitem
+        id="menu_mrp_plm_production_state"
+        name="Production State"
+        action="mrp_eco_production_state"
+        parent="mrp_plm.menu_mrp_plm_configuration"
+        sequence="12"/>    
+
+              
+        
+    </data>
+</odoo>

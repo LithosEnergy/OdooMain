@@ -13,6 +13,11 @@
                       <field name="tracking"/>
                       <field name="uom_id" options="{'no_create_edit': True, 'no_create': True, 'no_open': True}" />
                       <field name="categ_id" options="{'no_create_edit': True, 'no_create': True, 'no_open': True}" />
+                      <field name="cots"/>
+                      <field name="vendor" attrs="{'invisible': [('cots','=',False)], 'required': [('cots', '=', True)]}"/>
+                      <field name="vendor_product_code" attrs="{'invisible': [('cots','=',False)], 'required': [('cots', '=', True)]}"/>
+                      <field name="manufacturer" attrs="{'invisible': [('cots','=',False)]}"/>
+                      <field name="manufacturer_part_number" attrs="{'invisible': [('cots','=',False)]}"/>
                   </group>
                   <div align="center"><footer>
                       <button name="create_product" string="Create" type="object" class="oe_highlight"/>

@@ -1,5 +1,7 @@
 
 from odoo import models, fields, api, _
+from odoo.exceptions import Warning
+
 
 
 class Generate_Product_Wizard(models.TransientModel):
@@ -48,8 +50,19 @@ class Generate_Product_Wizard(models.TransientModel):
         change_default=True, default=_get_default_category_id, group_expand='_read_group_categ_id',
         required=True, help="Select category for the current product")
     
+    cots = fields.Boolean("COTS")
+    vendor = fields.Many2one('res.partner',string="Vendor",domain="[('supplier_rank', '>', 0)]")
+    vendor_product_code = fields.Char("Vendor Product Code")
+    manufacturer = fields.Many2one('res.partner',string="Manufacturer",domain="[('manufacturer', '=', True)]")
+    manufacturer_part_number = fields.Char("Manufacturer Part Number")
+    
+    
     #Generate new product 
     def create_product(self):
+        production_state = self.env['production.state'].search([('default', '=',"True")])        
+        if not production_state:
+            raise Warning(_("A default Production State must be defined in PLM Configuration prior to using this wizard to create a new product."))
+
         sequence = self.env['ir.sequence'].next_by_code('product.part') 
         vals = {'name': self.name,
                 'type': "product",
@@ -58,9 +71,23 @@ class Generate_Product_Wizard(models.TransientModel):
                 'uom_id': self.uom_id.id,
                 'uom_po_id': self.uom_id.id,
                 'default_code': sequence,
+                'sale_ok': False,
                 'categ_id': self.categ_id.id}
         
+        
         product = self.env['product.template'].create(vals)
+
+        if self.cots:
+            vendor_pricelist = self.env['product.supplierinfo'].create({
+                'name':self.vendor.id,
+                'product_code':self.vendor_product_code,
+                'product_tmpl_id':product.id
+            })
+
+        product.production_state = production_state[0].id
+        product.manufacturer = self.manufacturer
+        product.manufacturer_part_number = self.manufacturer_part_number
+
         return {
                 'type': 'ir.actions.act_window',
                 'res_model': 'product.template',
