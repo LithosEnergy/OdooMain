@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+       <record id="mrp_eco_view_form" model="ir.ui.view">
+            <field name="name">mrp.eco.view.form</field>
+            <field name="model">mrp.eco</field>
+            <field name="inherit_id" ref="mrp_plm.mrp_eco_view_form" />
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='tag_ids']" position="after">
+                    <field name="bom_document_wizard_line" attrs="{'invisible': [('type', '!=', 'bom')]}" invisible="1"/>
+                    <field name="revision_notes" attrs="{'invisible': [('type', '!=', 'bom')]}"/>
+                    <button name="upload_doc" string="Upload Documention" type="object" options='{"warn": true}' class="oe_edit_only oe_highlight" attrs="{'invisible': [('type', '!=', 'bom')]}"/>	
+                    
+                </xpath>
+
+            </field>
+        </record>  
+    </data>
+</odoo>
