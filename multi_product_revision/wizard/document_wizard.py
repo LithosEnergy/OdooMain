@@ -15,13 +15,15 @@ class Document_Wizard(models.Model):
     product_revisions_id = fields.Many2one('product.revisions',string='Product Revisions Id')
 
 
-
     def create(self, vals_list):
         active_id = self.env['mrp.eco.product'].browse(self._context.get('active_ids', [])).id
         for val in vals_list:
-            val['mrp_eco_product_id'] = active_id            
+            if 'bom_document_wizard_test' in val:#for type bom
+                val.pop('bom_document_wizard_test')
+            else:
+                val['mrp_eco_product_id'] = active_id #for type product          
         lines = super(Document_Wizard,self).create(vals_list)     
-        return lines  
+        return lines
 
 
     @api.onchange('upload_document')
