@@ -10,7 +10,7 @@
                 <xpath expr="//field[@name='product_tmpl_id']" position="replace">
                     <!-- <field name="product_tmpl_id" domain="[('type', 'in', ['consu', 'product'])]" attrs="{'readonly': [('state', '!=', 'confirmed')], 'invisible': [('type', 'in', ('routing', 'product'))], 'required': [('type', 'in', ('bom', 'both', 'product'))]}"/> -->
                     <field name="product_tmpl_id" domain="[('type', 'in', ['consu', 'product'])]" attrs="{'readonly': [('state', '!=', 'confirmed')], 'invisible': [('type', 'in', ('routing', 'product'))], 'required': [('type', 'in', ('bom', 'both'))]}"/>
-                    <field name="for_call_write"/>
+                    <!-- <field name="for_call_write"/> -->
                 </xpath>
                 <xpath expr="//form/sheet/notebook" position="inside">                  
 
@@ -18,14 +18,15 @@
 		                    <field name="affected_part_line" >
 		                        <tree editable="bottom">
                                     <field name ="affected_product_id" string="Product" options='{"no_open": True,"no_create": 1, "no_create_edit": 1}'/>
-		                            <field name ="production_state" string="Production State"/>
+		                            <!-- <field name ="production_state" string="Production State" /> -->
+                                    <field name ="production_state" string="Production State" options='{"no_open": True,"no_create": 1, "no_create_edit": 1}'/>
                                     <field name ="generate_revision" string="Generate Revision" />
                                     <field name ="next_revision" string="Next Revision"/>
                                     <field name="notes"/>
                                     
 		                            <field name="mrp_eco_id" invisible="1"/>
                                     <field name="document_wizard_line" invisible="1"/>
-                                    <button name="upload_doc" id="upload_doc_1" string="Upload Document" type="object"   width="0.1" options='{"warn": true}' attrs="{'invisible': [('generate_revision', '!=', True)]}" class="oe_edit_only oe_highlight"/>		                        
+                                    <button name="upload_doc" id="upload_doc_1" string="Upload Document" type="object" width="0.1" options='{"warn": true}' attrs="{'invisible': [('generate_revision', '!=', True)]}" class="oe_edit_only oe_highlight"/>		                        
                                 
                                 </tree>	                                                       
 		                    </field>
