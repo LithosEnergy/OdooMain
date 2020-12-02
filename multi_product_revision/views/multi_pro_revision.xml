@@ -13,7 +13,6 @@
 
                     <page string="Product Revisions">
 		                    <field name="product_revision_line">
-		                        <!-- <tree editable="bottom"> -->
                                  <tree editable="false" create="false" delete="false"> 
                                     <field name ="user_id" string="User ID" readonly="1"/>
                                     <field name ="date_creation" string="Created Date" readonly="1"/>                                  
