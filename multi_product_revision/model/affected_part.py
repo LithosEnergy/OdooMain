@@ -38,7 +38,7 @@ class inherited_mrp_eco(models.Model):
                             line.affected_product_id.write({'product_revision_line':[(0,0,vals)]})
                             line.affected_product_id.product_revision_line[-1].document_wizard_line =  wizard_line_lst
 
-        return eco
+        return eco                
 
 
     
@@ -60,9 +60,7 @@ class MRP_Eco_Product(models.Model):
     @api.onchange("generate_revision")    
     def change_affected_product_id(self):
         if self.generate_revision:            
-            self.next_revision = self.affected_product_id.version + 1
-            # vals = {'affected_part_line':self}
-            # self.mrp_eco_id.write(vals) 
+            self.next_revision = self.affected_product_id.version + 1            
             
         if not self.generate_revision:
             if self.document_wizard_line:
