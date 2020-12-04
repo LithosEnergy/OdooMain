@@ -16,9 +16,11 @@
     'depends': ['base','mrp_plm', 'purchase_stock','product_sequence_generator','product_number_variant'],
     'data': [
         'security/ir.model.access.csv',
+        'wizard/document_wizard.xml',
         'views/multi_pro_revision.xml',
         'views/affected_part.xml',
-        'wizard/document_wizard.xml',
+        'views/list_renderer.xml'
+        
     ],
     'demo': [
     ],
