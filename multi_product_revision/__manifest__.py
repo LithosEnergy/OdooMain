@@ -19,7 +19,7 @@
         'wizard/document_wizard.xml',
         'views/multi_pro_revision.xml',
         'views/affected_part.xml',
-        'views/list_renderer.xml'
+        'views/mrp_eco_product.xml',
         
     ],
     'demo': [
