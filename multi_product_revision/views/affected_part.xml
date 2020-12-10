@@ -14,8 +14,8 @@
                 <xpath expr="//form/sheet/notebook" position="inside">                  
 
                     <page string="Affected Parts" attrs="{'invisible': [('type', '!=', 'product')]}">
-		                    <field name="affected_part_line" readonly="1">
-		                        <tree>
+		                    <field name="affected_part_line" >
+		                        <tree editable="bottom">
                                     <!-- <field name ="affected_product_id" string="Product" options='{"no_open": True,"no_create": 1, "no_create_edit": 1}' widget="many2one_barcode"/> -->
                                     <field name ="affected_product_id" string="Product" options='{"no_open": False,"no_create": 1, "no_create_edit": 1}'/>
 		                            <field name ="copy_production_state" string="Copy Production State" invisible="1"/>
@@ -25,7 +25,10 @@
                                     <field name="notes"/>
                                     
 		                            <field name="mrp_eco_id" invisible="1"/>
-                                    <field name="document_wizard_line"/>                                
+                                    <!-- <field name="document_wizard_line" invisible="1"/> -->
+                                    <button name="upload_doc" id="upload_doc_1" string="Upload Document" type="object" options='{"warn": true}' attrs="{'invisible': [('generate_revision', '!=', True)]}" class="oe_edit_only oe_highlight"/>
+                                    <!-- <button name="upload_doc" string="Upload Document" type="object" class="oe_highlight"/>	 -->
+                                
                                 </tree>	
 
                                 <form>
@@ -39,7 +42,7 @@
                                             <field name="mrp_eco_id" invisible="1"/> 
                                             <field name="document_wizard_line" readonly="1">
                                                 <tree>
-                                                    <field name="item_number"/>                                    
+                                                    <!-- <field name="item_number"/>                                     -->
                                                     <field name="upload_document_name"/>   
                                                     <field name="upload_document" filename="upload_document_name"/>
                                                     <field name="mrp_eco_product_id" invisible="1"/>
