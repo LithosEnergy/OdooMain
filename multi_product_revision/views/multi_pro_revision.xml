@@ -12,15 +12,15 @@
                 <xpath expr="//form/sheet/notebook" position="inside">                 
 
                     <page string="Product Revisions">
-		                    <field name="product_revision_line" >
-		                        <tree editable="bottom">  
-                                    <field name ="user_id" string="User ID"/>
-                                    <field name ="date_creation" string="Created Date"/>                                  
-                                    <field name ="revision" string="Revision"/>
-                                    <field name="notes"/>                                    
+		                    <field name="product_revision_line">
+                                 <tree editable="false" create="false" delete="false"> 
+                                    <field name ="user_id" string="User ID" readonly="1"/>
+                                    <field name ="date_creation" string="Created Date" readonly="1"/>                                  
+                                    <field name ="revision" string="Revision" readonly="1"/>
+                                    <field name="notes" readonly="1"/>                                    
 		                            <field name="product_template_id" invisible="1"/>
                                     <!-- <field name="document_wizard_line" invisible="1"/> -->
-                                    <field name="document_wizard_line"/>
+                                    <field name="document_wizard_line" readonly="1"/>
                                     <!-- <button name="upload_doc" string="Upload Document" type="object"  class="oe_highlight" width="0.1" options='{"warn": true}'/>		                         -->
                                 
                                 </tree>	                                                       
