@@ -53,40 +53,28 @@ class MRP_Eco_Product(models.Model):
     notes = fields.Text(string="Notes")
     mrp_eco_id = fields.Many2one('mrp.eco',string='Mrp Eco Id')
     document_wizard_line = fields.One2many('document.wizard','mrp_eco_product_id',string="Upload Document", store=True,)
+        
 
-
-   
     # next revision calculation
     @api.onchange("generate_revision")    
     def change_affected_product_id(self):
         if self.generate_revision:            
-            self.next_revision = self.affected_product_id.version + 1            
+            self.next_revision = self.affected_product_id.version + 1                  
             
         if not self.generate_revision:
             if self.document_wizard_line:
                 raise Warning(_("Documents have already been uploaded for this new revision. You must first delete those documents before unchecking the 'Generate Revision' checkbox."))
-            self.next_revision = 0        
-
-
+            self.next_revision = 0       
+        
+    
     copy_production_state = fields.Char(related="affected_product_id.production_state.name",string="Copy Production State")
-    production_state = fields.Many2one('production.state',string="Production State")
+    production_state = fields.Many2one('production.state',string="Production State")  
+
+   
+    
 
 
-    def upload_doc(self):
-        if self:
-            return {
-            'name': _('Upload Document'),
-            'view_mode': 'form',
-            'res_model': 'mrp.eco.product',
-            'type': 'ir.actions.act_window',
-            'target': 'new',
-            'res_id':self.id,
-            'context': {},
-        }
-
-    def add_document(self):
-        print("Done")   
-
+   
     
 
 

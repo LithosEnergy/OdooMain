@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<odoo> 
-        <!-- autosave mrp.eco after clicking upload document -->
-       <template id="assets" inherit_id="web.assets_backend" name="multi_revision_list_render_assets" >
-            <xpath expr="." position="inside">
-                <script type="text/javascript" src="multi_product_revision/static/src/js/list_renderer.js"></script>
-            </xpath>
-        </template>
-</odoo>
