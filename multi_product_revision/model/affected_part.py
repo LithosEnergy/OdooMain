@@ -1,10 +1,16 @@
 from odoo import models, fields, api, _
 from odoo.exceptions import AccessError, UserError, RedirectWarning, ValidationError, Warning
 
+
 class inherited_mrp_eco(models.Model):
     _inherit = 'mrp.eco'
 
-    affected_part_line = fields.One2many('mrp.eco.product','mrp_eco_id',string="Affected Part")    
+    affected_part_line = fields.One2many('mrp.eco.product','mrp_eco_id',string="Affected Part")
+    affected_part_line_count = fields.Integer('# Affected Parts', compute='_compute_affected_part_line_count') 
+
+    def _compute_affected_part_line_count(self):
+        for p in self:
+            p.affected_part_line_count = len(p.affected_part_line)   
 
     def action_apply(self):
         eco = super(inherited_mrp_eco, self).action_apply()
@@ -38,40 +44,66 @@ class inherited_mrp_eco(models.Model):
                             line.affected_product_id.write({'product_revision_line':[(0,0,vals)]})
                             line.affected_product_id.product_revision_line[-1].document_wizard_line =  wizard_line_lst
 
-        return eco                
+        return eco   
+
+
+    def action_see_affected_parts(self):
+        domain = [('mrp_eco_id', '=', self.name)]             
+        attachment_view = self.env.ref('multi_product_revision.mrp_eco_affected_parts_tree')        
+        return {
+            'name': _('Affected Parts'),
+            'domain':domain,
+            'res_model': 'mrp.eco.product',
+            'view_id': attachment_view.id,
+            'views': [(attachment_view.id, 'tree'), (False, 'form')],
+            'view_mode': 'tree,form',
+            'type': 'ir.actions.act_window',
+            'limit': 80,
+            'context':{},
+        }
+        
+
+             
 
 
     
 
 class MRP_Eco_Product(models.Model):
     _name = 'mrp.eco.product'
-    _description = 'MRP Eco Product'    
+    _description = 'MRP Eco Product'  
 
+    
     affected_product_id = fields.Many2one('product.template', string="Product")
     generate_revision = fields.Boolean(string="Generate Revision")
     next_revision = fields.Integer(string="Next Revision")
     notes = fields.Text(string="Notes")
     mrp_eco_id = fields.Many2one('mrp.eco',string='Mrp Eco Id')
     document_wizard_line = fields.One2many('document.wizard','mrp_eco_product_id',string="Upload Document", store=True,)
+    
+    @api.onchange("mrp_eco_id")    
+    def change_mrp_eco_id(self):
+        if self:
+            self.mrp_eco_id = self.env['mrp.eco'].browse(self._context.get('active_ids', [])).id
 
+    
 
-   
     # next revision calculation
     @api.onchange("generate_revision")    
     def change_affected_product_id(self):
         if self.generate_revision:            
-            self.next_revision = self.affected_product_id.version + 1            
+            self.next_revision = self.affected_product_id.version + 1                  
             
         if not self.generate_revision:
             if self.document_wizard_line:
                 raise Warning(_("Documents have already been uploaded for this new revision. You must first delete those documents before unchecking the 'Generate Revision' checkbox."))
-            self.next_revision = 0        
-
-
+            self.next_revision = 0       
+        
+    
     copy_production_state = fields.Char(related="affected_product_id.production_state.name",string="Copy Production State")
-    production_state = fields.Many2one('production.state',string="Production State")
+    production_state = fields.Many2one('production.state',string="Production State") 
 
-
+ 
+   
     def upload_doc(self):
         if self:
             return {
@@ -83,10 +115,13 @@ class MRP_Eco_Product(models.Model):
             'res_id':self.id,
             'context': {},
         }
+    
 
     def add_document(self):
         print("Done")   
 
+
+   
     
 
 

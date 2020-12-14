@@ -11,53 +11,10 @@
                     <!-- <field name="product_tmpl_id" domain="[('type', 'in', ['consu', 'product'])]" attrs="{'readonly': [('state', '!=', 'confirmed')], 'invisible': [('type', 'in', ('routing', 'product'))], 'required': [('type', 'in', ('bom', 'both', 'product'))]}"/> -->
                     <field name="product_tmpl_id" domain="[('type', 'in', ['consu', 'product'])]" attrs="{'readonly': [('state', '!=', 'confirmed')], 'invisible': [('type', 'in', ('routing', 'product'))], 'required': [('type', 'in', ('bom', 'both'))]}"/>
                 </xpath>
-                <xpath expr="//form/sheet/notebook" position="inside">                  
-
-                    <page string="Affected Parts" attrs="{'invisible': [('type', '!=', 'product')]}">
-		                    <field name="affected_part_line" >
-		                        <tree editable="bottom">
-                                    <!-- <field name ="affected_product_id" string="Product" options='{"no_open": True,"no_create": 1, "no_create_edit": 1}' widget="many2one_barcode"/> -->
-                                    <field name ="affected_product_id" string="Product" options='{"no_open": False,"no_create": 1, "no_create_edit": 1}'/>
-		                            <field name ="copy_production_state" string="Copy Production State" invisible="1"/>
-                                    <field name ="production_state" string="Production State" options='{"no_open": True,"no_create": 1, "no_create_edit": 1}' domain="[('name', '!=', copy_production_state)]"/>
-                                    <field name ="generate_revision" string="Generate Revision" />
-                                    <field name ="next_revision" string="Next Revision"/>
-                                    <field name="notes"/>
-                                    
-		                            <field name="mrp_eco_id" invisible="1"/>
-                                    <!-- <field name="document_wizard_line" invisible="1"/> -->
-                                    <button name="upload_doc" id="upload_doc_1" string="Upload Document" type="object" options='{"warn": true}' attrs="{'invisible': [('generate_revision', '!=', True)]}" class="oe_edit_only oe_highlight"/>
-                                    <!-- <button name="upload_doc" string="Upload Document" type="object" class="oe_highlight"/>	 -->
-                                
-                                </tree>	
-
-                                <form>
-                                    <sheet>
-                                        <group col="2">
-                                            <field name ="affected_product_id" string="Product" options='{"no_open": False,"no_create": 1, "no_create_edit": 1}' widget="many2one_barcode"/>
-                                            <field name ="production_state" string="Production State" options='{"no_open": True,"no_create": 1, "no_create_edit": 1}'/>
-                                            <field name ="generate_revision" string="Generate Revision" />
-                                            <field name ="next_revision" string="Next Revision"/>
-                                            <field name="notes"/>                                            
-                                            <field name="mrp_eco_id" invisible="1"/> 
-                                            <field name="document_wizard_line" readonly="1">
-                                                <tree>
-                                                    <!-- <field name="item_number"/>                                     -->
-                                                    <field name="upload_document_name"/>   
-                                                    <field name="upload_document" filename="upload_document_name"/>
-                                                    <field name="mrp_eco_product_id" invisible="1"/>
-                                                    <field name="full_url" widget="url" readonly="1" attrs="{'invisible': [('upload_document', '=', False)]}"/>
-                                                </tree>
-                                            </field>
-                                            
-                                        </group>
-                                    </sheet>
-                                </form>
-
-
-		                    </field>
-                    </page>
-
+                <xpath expr="//form/sheet/div/button[@name='action_see_attachments']" position="after"> 
+                        <button class="oe_stat_button" name="action_see_affected_parts" type="object" icon="fa-file-text-o">
+                            <field string="Affected Parts" name="affected_part_line_count" widget="statinfo"/>
+                        </button> 
                 </xpath>
             </field>
         </record>  

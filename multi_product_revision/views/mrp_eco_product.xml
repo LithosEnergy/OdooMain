@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<odoo>
+		<data>
+
+      <record id="mrp_eco_affected_parts_tree" model="ir.ui.view">
+          <field name="name">affected_part_tree</field>
+          <field name="model">mrp.eco.product</field>
+          <field name="type">tree</field>
+          <field eval="8" name="priority"/>
+          <field name="arch" type="xml">          
+          <tree string="Affected Parts" editable='bottom'>
+          <!-- <tree string="Affected Parts"> -->
+              <field name="mrp_eco_id"/>
+              <field name ="affected_product_id" string="Product" options='{"no_open": False,"no_create": 1, "no_create_edit": 1}'/>
+              <field name ="copy_production_state" string="Copy Production State" invisible="1"/>
+              <field name ="production_state" string="Production State" options='{"no_open": True,"no_create": 1, "no_create_edit": 1}' domain="[('name', '!=', copy_production_state)]"/>
+              <field name ="generate_revision" string="Generate Revision" />
+              <field name ="next_revision" string="Next Revision"/>
+              <field name="notes"/> 
+                                                 
+              <field name="document_wizard_line" attrs="{'invisible': [('generate_revision', '!=', True)]}"/> 
+              <button name='upload_doc' type='object' string='upload document' attrs="{'invisible': [('generate_revision', '!=', True)]}" class="oe_edit_only oe_highlight"/>				
+          </tree>
+          </field>
+        </record>
+
+
+          <!-- <record id="mrp_eco_affected_parts_form" model="ir.ui.view">
+	            <field name="name">affected_part_form</field>
+	            <field name="model">mrp.eco.product</field>
+				      <field name="type">form</field>
+	            <field name="arch" type="xml">
+	                 <form string="Affected Parts">
+                    <sheet>
+                        <group col="2">
+                            <field name="mrp_eco_id"/>
+                            <field name ="affected_product_id" string="Product" options='{"no_open": False,"no_create": 1, "no_create_edit": 1}'/>
+                            <field name ="copy_production_state" string="Copy Production State" invisible="1"/>
+                            <field name ="production_state" string="Production State" options='{"no_open": True,"no_create": 1, "no_create_edit": 1}' domain="[('name', '!=', copy_production_state)]"/>
+                            <field name ="generate_revision" string="Generate Revision" />
+                            <field name ="next_revision" string="Next Revision"/>
+                            <field name="notes"/>
+                        </group>
+                            
+                          <notebook>
+                          <page string="Upload Documention">
+                            <field name="document_wizard_line" attrs="{'invisible': [('generate_revision', '!=', True)]}">
+                                    <tree editable="bottom">
+                                        <field name="item_number"/>                                    
+                                        <field name="upload_document_name"/>   
+                                        <field name="upload_document" filename="upload_document_name"/>
+                                        <field name="mrp_eco_product_id" invisible="1"/>
+                                        <field name="full_url" widget="url" readonly="1" attrs="{'invisible': [('upload_document', '=', False)]}"/>
+                                    </tree>                                                                                                                      
+                            </field>
+                          </page> 
+                          </notebook> 
+                                                            
+                    </sheet>
+                </form>
+	           	</field>
+	        </record> -->
+
+        <!-- <record id="mrp_eco_affected_parts" model="ir.actions.act_window">
+          <field name="name">Affected Parts</field>
+          <field name="res_model">mrp.eco.product</field>
+          <field name="view_mode">tree,form</field>
+          <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+              create a new affected parts for ECO
+            </p>
+          </field>
+        </record>     -->
+
+
+        
+
+        <!-- <menuitem
+        id="menu_mrp_plm_production_state"
+        name="Affected Parts"
+        action="mrp_eco_affected_parts"
+        parent="mrp_plm.menu_mrp_plm_configuration"
+        sequence="15"/> -->
+
+              
+        
+    </data>
+</odoo>
