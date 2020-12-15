@@ -76,6 +76,7 @@ class Generate_Product_Wizard(models.TransientModel):
         
         
         product = self.env['product.template'].create(vals)
+        product.version = 0 #product.template.version set 0 because default its 1
 
         if self.cots:
             vendor_pricelist = self.env['product.supplierinfo'].create({
