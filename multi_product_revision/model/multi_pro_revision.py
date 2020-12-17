@@ -22,6 +22,19 @@ class Product_Revisions(models.Model):
 
 
 
+    def upload_doc(self):
+        if self:
+            return {
+            'name': _('Upload Document'),
+            'view_mode': 'form',
+            'res_model': 'product.revisions',
+            'type': 'ir.actions.act_window',
+            'target': 'new',
+            'res_id':self.id,
+            'context': {},
+        }
+
+
 
 
 
