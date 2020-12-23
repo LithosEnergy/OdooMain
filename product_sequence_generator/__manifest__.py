@@ -20,6 +20,7 @@
         'views/production_state.xml',
         'views/res_partner.xml',
         'views/product_template.xml',
+        'views/mrp_eco.xml',
     ],
     'demo': [
         'demo/product_sequence_data.xml',

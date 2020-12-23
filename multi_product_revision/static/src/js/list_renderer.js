@@ -10,12 +10,15 @@ odoo.define('multi_product_revision.customListRenderer', function (require) {
     var Pager = require('web.Pager');
     var utils = require('web.utils');
     var viewUtils = require('web.viewUtils');
+    var basic_fields = require('web.basic_fields');
+
 
     var _t = core._t;
+  
 
     ListRenderer.include({
         // You need to redefine the function here
-
+        
         _renderButton: function (record, node) {
             var self = this;
             var nodeWithoutWidth = Object.assign({}, node);
@@ -26,20 +29,17 @@ odoo.define('multi_product_revision.customListRenderer', function (require) {
             });
             this._handleAttributes($button, node);
             this._registerModifiers(node, record, $button);
-                        
+                       
 
-            if (record.context['active_model'] == 'mrp.eco.type') {
-                // TODO this should be moved to a handler
-                $button.on("click", function (e) {
-                    e.stopPropagation();
-                    self.trigger_up('button_clicked', {
-                        attrs: node.attrs,
-                        record: record,
-                    });
+            if (record.data['generate_revision_depend'] == true){
+                self.trigger_up('button_clicked', {
+                    attrs: node.attrs,
+                    record: record,
                 });
-            }
-
-            else if (record.res_id) {
+            }      
+            
+            
+            if (record.res_id) {
                 // TODO this should be moved to a handler
                 $button.on("click", function (e) {
                     e.stopPropagation();
