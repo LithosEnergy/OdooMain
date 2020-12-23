@@ -11,9 +11,11 @@ class product_variant(models.Model):
     user_id = fields.Many2one('res.users',"User",default=lambda self: self.env.user)
 
 
+
 class product_template_inherit(models.Model):
     _inherit = 'product.template'
 
+    
     def action_genrate_new_variant(self):
         variant_level_list = []
         if self.default_code:
@@ -56,15 +58,17 @@ class product_template_inherit(models.Model):
                     res.name = self.name
                     res.default_code = final_part_number + final_char
                     new_product_id = res.id
-                    return {
-                            'type': 'ir.actions.act_window',
-                            'res_model': 'product.template',
-                            'view_type': 'form',
-                            'view_mode': 'form',
-                            'target': 'current',
-                            'res_id': new_product_id,
-                            'flags': {'form': {'action_buttons': True, 'options': {'mode': 'edit'}}},
-                        }                                               
+                    return res.id
+                                        
+                    # return {
+                    #         'type': 'ir.actions.act_window',
+                    #         'res_model': 'product.template',
+                    #         'view_type': 'form',
+                    #         'view_mode': 'form',
+                    #         'target': 'current',
+                    #         'res_id': new_product_id,
+                    #         'flags': {'form': {'action_buttons': True, 'options': {'mode': 'edit'}}},
+                    #     }                                               
                     
                     
             else:
