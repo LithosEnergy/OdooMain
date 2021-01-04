@@ -28,23 +28,29 @@ class inherit_MrpEco(models.Model):
                     mail_template = self.env['mail.template'].browse(template_id)
                     email_from = "%(email_from_usr)s <%(email_from_mail)s>" % {'email_from_usr': email_from_usr, 'email_from_mail': email_from_mail}
 
-                    for approval_id in self.stage_id.approval_template_ids:
-                        for user_id in approval_id.user_ids:
-                            email_to_user = user_id.name
-                            email_to = user_id.email
+                    email_to_list = []
+                    for stage_id in self.stage_id.search([]):
+                        for approval_id in stage_id.approval_template_ids:
+                            for user_id in approval_id.user_ids:
+                                email_to_user = user_id.name
+                                email_to = user_id.email
+                                email_to_list.append(email_to)
 
-                            template = mail_template.sudo().with_context(base_context,
-                                eco_summuary_name = self.name,
-                                eco_stage_name = self.stage_id.name,
-                                email_from_usr = email_from_usr,
-                                email_from_mail = email_from_mail,
-                                email_to_user = email_to_user,
-                                company = company.logo,
-                                email_from = email_from,
-                                # email_to = "pravins@techspawn.co",
-                                email_to = email_to,
-                                subject = ("ECO stage is changed "),
-                                )         
-                            template.send_mail(self.id, force_send=True)                   
-                            # template.send_mail(self.search([('name','=',self.name)]).id, force_send=True) #if onchange stage_id used
+                    nondupli_email_to_list = [] 
+                    [nondupli_email_to_list.append(x) for x in email_to_list if x not in nondupli_email_to_list]
+
+                    template = mail_template.sudo().with_context(base_context,
+                        eco_summuary_name = self.name,
+                        eco_stage_name = self.stage_id.name,
+                        email_from_usr = email_from_usr,
+                        email_from_mail = email_from_mail,
+                        # email_to_user = email_to_user,
+                        company = company.logo,
+                        email_from = email_from,
+                        email_to = ",".join(nondupli_email_to_list),
+                        subject = ("ECO stage is changed "),
+                        )         
+                    template.send_mail(self.id, force_send=True)                                      
+                    self.message_post(message_type=_('comment'),body=_('''<p>Hello,</p>\n\n<p>User has changed ECO({}) stage to {}.</p>\n\n<p>Regards,</p><p>{}</p>'''.format(self.name,self.stage_id.name,email_from_usr)))                 
+                    # template.send_mail(self.search([('name','=',self.name)]).id, force_send=True) #if onchange stage_id used
 
