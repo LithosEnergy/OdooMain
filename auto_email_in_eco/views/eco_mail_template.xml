@@ -13,7 +13,7 @@
             <field name="body_html"><![CDATA[<html>
                         <head></head>
                         % set company = record and record.company_id or ctx.get('company')           
-                        <p>Dear ${ctx['email_to_user']|safe},</p>
+                        <p>Hello,</p>
                         <p>User has changed ECO(${ctx['eco_summuary_name']|safe}) stage to ${ctx['eco_stage_name']|safe}.</p>
 
                         <p>Regards,</p>
