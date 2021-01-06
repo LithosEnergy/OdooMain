@@ -2,33 +2,118 @@
 <odoo>
     <data>
 
-    <template id="report_mrpeo">
-        <t t-set="o" t-value="doc"/>
-            <t t-call="web.external_layout">
-                <t t-set="o" t-value="o.with_context(lang=o.partner_id.lang)" />
-                <t t-set="information_block">
+        <record id="paperformat_custom_report" model="report.paperformat">
+            <field name="name">ECO report</field>
+            <field name="default" eval="True"/>
+            <field name="format">A4</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">50</field>
+            <field name="margin_bottom">28</field>
+            <field name="margin_left">7</field>
+            <field name="margin_right">7</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">45</field>
+            <field name="dpi">90</field>
+        </record>
 
-                <!-- add code here -->
-                
+        <template id="report_mrpeco_custom2">
+                <t t-set="o" t-value="doc"/>
+                    <t t-call="web.external_layout">
+                        <t t-set="o" t-value="o.with_context(lang=o.user_id.lang)" />
+                        <div class="page">
+                            <div class="oe_structure"/>
+                            <h2>
+                                <span>ECO #:</span>
+                                <span t-field="o.name"/>
+                            </h2>
+                            <div id="informations" class="row mt32 mb32">
+                                <div t-if="o.type" class="col-3 bm-2">
+                                    <strong>Apply on :</strong>
+                                    <p t-field="o.type" class="m-0"/>
+                                </div>
+                                <div t-if="o.type == 'bom'" class="col-3 bm-2">
+                                    <div t-if="o.product_tmpl_id">
+                                        <strong>Product :</strong>
+                                        <p t-field="o.product_tmpl_id" class="m-0"/>
+                                    </div>                                    
+                                </div>
+                                <div t-if="o.type == 'bom'" class="col-3 bm-2">                                    
+                                    <div t-if="o.bom_id">
+                                        <strong>BOM :</strong>
+                                        <p t-field="o.bom_id" class="m-0"/>
+                                    </div>
+                                </div>
+                                <div t-if="o.stage_id.name" class="col-3 bm-2">
+                                    <strong>Stage :</strong>
+                                    <p t-field="o.stage_id.name" class="m-0"/>
+                                </div>
+                                <!-- <div t-if="o.user_id.name" class="col-3 bm-2">
+                                    <strong>Responsible :</strong>
+                                    <p t-field="o.user_id.name" class="m-0"/>
+                                </div> -->                                
+                            </div>
+
+                            <table class="table table-sm o_main_table">
+                                <thead>
+                                    <t t-if="o.approval_ids">
+                                        <tr><strong>Approvals:</strong></tr>
+                                        <tr>                                        
+                                            <th class="text-right">Role</th>                                        
+                                            <th class="text-right">Status</th>
+                                            <th class="text-right">Approval Stage</th>
+                                            <th class="text-right">Requested Users</th>                                        
+                                        </tr>
+                                    </t>
+
+                                </thead>
+                                <tbody>
+                                    <t t-if="o.approval_ids">
+                                        <tr t-foreach="o.approval_ids" t-as="line">
+                                            <td class="text-right">
+                                                <span t-field="line.name" />
+                                            </td>
+                                            <td class="text-right">
+                                                <span t-field="line.status" />
+                                            </td>
+                                            <td class="text-right">
+                                                <span t-field="line.template_stage_id" />
+                                            </td>
+                                            <td class="text-right">
+                                                <span t-field="line.required_user_ids" />
+                                            </td>                                          
+                                            
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </t>
+        </template>
+
+
+
+
+
+        <template id="report_mrpeco">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <p t-field="doc.name"/>
+                    <t t-call="auto_email_in_eco.report_mrpeco_custom2" t-lang="doc.user_id.lang"/>
                 </t>
             </t>
-    </template>
-
-    <template id="report_mrpeco2">
-        <t t-call="web.html_container">
-            <t t-foreach="docs" t-as="doc">
-                <t t-call="repair.report_mrpeo" t-lang="doc.partner_id.lang"/>
-            </t>
-        </t>
-    </template>
+        </template>
 
 
         <report 
             string="ECO Custom report" 
             id="action_report_mrp_eco"
             model="mrp.eco"
-            name="repair.report_mrpeco2"
-            file="repair.report_mrpeco"
+            paperformat="auto_email_in_eco.paperformat_custom_report"
+            name="auto_email_in_eco.report_mrpeco"
+            file="auto_email_in_eco.report_mrpeco"
             report_type="qweb-pdf"
         />
 

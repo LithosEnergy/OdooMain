@@ -1,31 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-       <!-- <record id="custom_plm_eco_email_template" model="mail.template">
-            <field name="name">custom plm eco mail template</field>
-            <field name="email_from">${ctx['email_from']|safe}</field>
-            <field name="email_to">${ctx['email_to']|safe}</field>
-            <field name="subject">${ctx['subject']|safe}</field>
-            <field name="lang">${object.lang}</field>
-            <field name="model_id" ref="mrp_plm.model_mrp_eco"/>
-            <field name="auto_delete" eval="True"/>
-            <field name="auto_delete" eval="True"/>
-            <field name="body_html"><![CDATA[<html>
-                        <head></head>
-                        % set company = record and record.company_id or ctx.get('company')           
-                        <p>Hello,</p>
-                        <p>User has changed ECO(${ctx['eco_summuary_name']|safe}) stage to ${ctx['eco_stage_name']|safe}.</p>
-
-                        <p>Regards,</p>
-                        <td>${ctx['email_from_usr']|safe}</td>
-
-                        </html>]]>
-            </field>
-        </record> -->
-
-
-
-
+      
         <record id="custom_plm_eco_email_template" model="mail.template">
             <field name="name">custom plm eco mail template</field>
             <field name="email_from">${ctx['email_from']|safe}</field>
@@ -54,6 +30,7 @@
                                     </td>
                                     <td valign="middle" align="right">
                                         <img src="/auto_email_in_eco/static/src/image/lithos_logo.png" style="padding: 0px; margin: 0px; height: 48px;" alt="${ctx['company_name']|safe}"/>
+                                        <!-- <img src="data:image/png;base64,${ctx['company']|safe}"/> -->
                                     </td>
                                 </tr>
                                 <tr><td colspan="2" style="text-align:center;">
@@ -102,8 +79,9 @@
             </table>
                 
             </field>
+            <field name="report_template" ref="auto_email_in_eco.action_report_mrp_eco"/>
+            <field name="report_name">${ctx['eco_summuary_name']|safe}</field>
         </record>
-
 
 
     </data>
