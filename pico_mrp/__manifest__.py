@@ -1,9 +1,8 @@
 {
     'name': 'Pico MES Integration',
-    'author': "Hibou Corp.",
+    'author': 'Pico MES',
     'depends': [
         'mrp',
-        'queue_job',
     ],
     'demo': [],
     'data': [
