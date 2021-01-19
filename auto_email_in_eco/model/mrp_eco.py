@@ -69,25 +69,19 @@ class inherit_MrpEco(models.Model):
                         email_to = ",".join(nondupli_email_to_list),
                         subject = ("ECO (Ref {})".format(self.name)),                        
                         )   
-                    template.send_mail(self.id, force_send=True)   
+                    template.send_mail(self.id, force_send=True) 
                     
                     eco_report_attachment_id = self.convert_report2attachment()
                     self.message_post(message_type=_('comment'),body=_('''<p>Hello,</p>\n\n<p>Engineering Change Order<strong>({})</strong> has been moved to stage <strong>{}</strong>.</p><p>You can reply to this email if you have any questions.</p>\n\n<p>Thank you,</p><p>{}</p>'''.format(self.name,self.stage_id.name,email_from_usr)),attachment_ids=[eco_report_attachment_id.id])                
                     # template.send_mail(self.search([('name','=',self.name)]).id, force_send=True) #if onchange stage_id used
 
 
-    def convert_report2attachment(self):
-        pdf = self.env.ref('auto_email_in_eco.action_report_mrp_eco').render_qweb_pdf(self.ids)
-        b64_pdf = base64.b64encode(pdf[0])
-        # save pdf as attachment
-        name = self.name
+    def convert_report2attachment(self):     
+        content= self.env.ref('auto_email_in_eco.action_report_mrp_eco').render_qweb_pdf(self.ids)
         return self.env['ir.attachment'].create({
-            'name': name,
-            'type': 'binary',
-            'datas': b64_pdf,
-            # 'datas_fname': name + '.pdf',
-            'store_fname': name,
-            'res_model': self._name,
-            'res_id': self.id,
-            'mimetype': 'application/x-pdf'
-        })
+                'name': self.name + '.pdf',
+                'type': 'binary',
+                'datas': base64.encodestring(content[0]),
+                'res_model': self._name,
+                'res_id': self.id
+            })
