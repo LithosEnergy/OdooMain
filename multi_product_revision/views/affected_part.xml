@@ -6,6 +6,9 @@
             <field name="model">mrp.eco</field>
             <field name="inherit_id" ref="mrp_plm.mrp_eco_view_form" />
             <field name="arch" type="xml">
+                <xpath expr="//form/header/button[@name='action_apply']" position="replace">
+                    <button string="Submit" name="action_apply" type="object" class="oe_highlight" attrs="{'invisible': [('allow_apply_change', '=', False)]}"/>
+                </xpath>
 
                 <xpath expr="//field[@name='product_tmpl_id']" position="replace">
                     <!-- <field name="product_tmpl_id" domain="[('type', 'in', ['consu', 'product'])]" attrs="{'readonly': [('state', '!=', 'confirmed')], 'invisible': [('type', 'in', ('routing', 'product'))], 'required': [('type', 'in', ('bom', 'both', 'product'))]}"/> -->
