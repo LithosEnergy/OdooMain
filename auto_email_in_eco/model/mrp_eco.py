@@ -1,9 +1,9 @@
 from odoo import models, fields, api, _
-
+import base64
 
 class inherit_MrpEco(models.Model):
     _inherit = 'mrp.eco'
-    
+  
 
     def write(self, vals):
         res = super(inherit_MrpEco, self).write(vals)
@@ -39,18 +39,49 @@ class inherit_MrpEco(models.Model):
                     nondupli_email_to_list = [] 
                     [nondupli_email_to_list.append(x) for x in email_to_list if x not in nondupli_email_to_list]
 
+                    if company.phone:
+                        company_phone = company.phone
+                    else:
+                        company_phone = ""
+
+                    if company.email:
+                        company_email = company.email
+                    else:
+                        company_email = ""
+
+                    if company.website:
+                        company_website = company.website
+                    else:
+                        company_website = ""
+                    
                     template = mail_template.sudo().with_context(base_context,
                         eco_summuary_name = self.name,
                         eco_stage_name = self.stage_id.name,
                         email_from_usr = email_from_usr,
                         email_from_mail = email_from_mail,
                         # email_to_user = email_to_user,
-                        company = company.logo,
+                        # company = company.logo,
+                        company_name = company.name,
+                        company_phone = company_phone,
+                        company_email = company_email,
+                        company_website = company_website,
                         email_from = email_from,
                         email_to = ",".join(nondupli_email_to_list),
-                        subject = ("ECO stage is changed "),
-                        )         
-                    template.send_mail(self.id, force_send=True)                                      
-                    self.message_post(message_type=_('comment'),body=_('''<p>Hello,</p>\n\n<p>User has changed ECO({}) stage to {}.</p>\n\n<p>Regards,</p><p>{}</p>'''.format(self.name,self.stage_id.name,email_from_usr)))                 
+                        subject = ("ECO (Ref {})".format(self.name)),                        
+                        )   
+                    template.send_mail(self.id, force_send=True) 
+                    
+                    eco_report_attachment_id = self.convert_report2attachment()
+                    self.message_post(message_type=_('comment'),body=_('''<p>Hello,</p>\n\n<p>Engineering Change Order<strong>({})</strong> has been moved to stage <strong>{}</strong>.</p><p>You can reply to this email if you have any questions.</p>\n\n<p>Thank you,</p><p>{}</p>'''.format(self.name,self.stage_id.name,email_from_usr)),attachment_ids=[eco_report_attachment_id.id])                
                     # template.send_mail(self.search([('name','=',self.name)]).id, force_send=True) #if onchange stage_id used
 
+
+    def convert_report2attachment(self):     
+        content= self.env.ref('auto_email_in_eco.action_report_mrp_eco').render_qweb_pdf(self.ids)
+        return self.env['ir.attachment'].create({
+                'name': self.name + '.pdf',
+                'type': 'binary',
+                'datas': base64.encodestring(content[0]),
+                'res_model': self._name,
+                'res_id': self.id
+            })

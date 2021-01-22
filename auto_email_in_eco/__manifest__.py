@@ -15,8 +15,10 @@
     'version': '13.0.0',
     'depends': ['base','mrp_plm', 'purchase_stock','product_sequence_generator','product_number_variant','modified_bom','multi_product_revision'],
     'data': [
+        'report/eco_report.xml',
         'views/mrp_eco_stage.xml',
         'views/eco_mail_template.xml',
+        
     ],
     'demo': [
     ],

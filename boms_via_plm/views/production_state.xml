@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <record id="inherit_production_state_view_form" model="ir.ui.view">
+                <field name="name">inherit.production.state.view.form</field>
+                <field name="model">production.state</field>
+                <field name="type">form</field>
+                <field name="inherit_id" ref="product_sequence_generator.mrp_eco_production_state_form" />
+                <field name="arch" type="xml">
+                    <xpath expr="//form/sheet/group/field[@name='user_id']" position="after">
+                        <field name="sequence"/>
+                    </xpath>
+                </field>
+        </record>
+
+        <record id="inherit_production_state_view_tree" model="ir.ui.view">
+                <field name="name">inherit.production.state.view.tree</field>
+                <field name="model">production.state</field>
+                <field name="inherit_id" ref="product_sequence_generator.mrp_eco_production_state_tree" />
+                <field name="arch" type="xml">
+                    <xpath expr="//tree/field[@name='user_id']" position="after">
+                        <field name="sequence"/>
+                    </xpath>
+                </field>
+        </record>
+
+    </data>
+</odoo>
