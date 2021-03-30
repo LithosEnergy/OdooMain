@@ -17,6 +17,8 @@
     'data': [
         'views/production_state.xml',
         'views/mrp_eco.xml',
+        'views/mrp_bom.xml',
+        'views/custom_pager.xml',
         
     ],
     'demo': [
