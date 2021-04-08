@@ -52,7 +52,10 @@
                                     <field name="upload_document" filename="upload_document_name"/>
                                     <field name="product_revisions_id" invisible="1"/>
                                     <field name="full_url" widget="url" readonly="1" attrs="{'invisible': [('upload_document', '=', False)]}"/>
-                                </tree>	                                                       
+                                </tree>	 
+                                <form>
+                                    <field name="upload_document" filename="upload_document_name"/>
+                                </form>                                                      
                     </field>
                     <div align="center"><footer>
                      
