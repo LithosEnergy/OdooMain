@@ -13,7 +13,7 @@
 
     'author': "Techspawn Solutions Pvt. Ltd.",
     'websites': "http://www.techspawn.com",
-    'depends': ['sale','mrp'],
+    'depends': ['sale_management','mrp'],
     'installable': True,
     'data': [
             'views/sale_order.xml',
