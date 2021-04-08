@@ -52,6 +52,9 @@
                                                     <field name="mrp_eco_product_id" invisible="1"/>
                                                     <field name="full_url" widget="url" readonly="1" attrs="{'invisible': [('upload_document', '=', False)]}"/>
                                                 </tree>
+                                                <form>
+                                                    <field name="upload_document" filename="upload_document_name"/>
+                                                </form>
                                             </field>
                                             
                                         </group>
