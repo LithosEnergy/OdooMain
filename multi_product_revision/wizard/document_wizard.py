@@ -48,6 +48,6 @@ class Document_Wizard(models.Model):
     def _compute_full_url(self):
         base_url = self.env["ir.config_parameter"].sudo().get_param("web.base.url")   
         for record in self:
-            record.full_url = "%s/web/image?model=document.wizard&id=%s&field=upload_document" % (base_url, record.id)
-
+            # record.full_url = "%s/web/image?model=document.wizard&id=%s&field=upload_document" % (base_url, record.id)
+            record.full_url = "%s/web/image/document.wizard/%s/upload_document/%s" % (base_url, record.id,record.upload_document_name)
 
