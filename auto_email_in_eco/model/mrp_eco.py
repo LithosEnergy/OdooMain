@@ -1,5 +1,6 @@
 from odoo import models, fields, api, _
 import base64
+from urllib.parse import urlencode
 
 class inherit_MrpEco(models.Model):
     _inherit = 'mrp.eco'
@@ -72,8 +73,20 @@ class inherit_MrpEco(models.Model):
                     template.send_mail(self.id, force_send=True) 
                     
                     eco_report_attachment_id = self.convert_report2attachment()
-                    self.message_post(message_type=_('comment'),body=_('''<p>Hello,</p>\n\n<p>Engineering Change Order<strong>({})</strong> has been moved to stage <strong>{}</strong>.</p><p>You can reply to this email if you have any questions.</p>\n\n<p>Thank you,</p><p>{}</p>'''.format(self.name,self.stage_id.name,email_from_usr)),attachment_ids=[eco_report_attachment_id.id])                
+                    self.message_post(message_type=_('comment'),body=_('''<p>Hello,</p>\n\n<p>Engineering Change Order<strong>({})</strong> has been moved to stage <strong>{}</strong>.</p><p>You can reply to this email if you have any questions.</p>\n\n<p>Thank you,</p><p>{}</p>'''.format(self.name,self.stage_id.name,email_from_usr)),attachment_ids=[eco_report_attachment_id.id])
                     # template.send_mail(self.search([('name','=',self.name)]).id, force_send=True) #if onchange stage_id used
+
+    def get_full_url(self):
+        self.ensure_one()
+        base_url = self.env["ir.config_parameter"].get_param("web.base.url")
+        url_params = {
+            'id': self.id,
+            'view_type': 'form',
+            'model': 'mrp.eco',
+
+        }
+        params = '/web?#%s' % urlencode(url_params)
+        return base_url + params
 
 
     def convert_report2attachment(self):     
