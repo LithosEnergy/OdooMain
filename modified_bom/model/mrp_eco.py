@@ -50,3 +50,23 @@ class mrp_eco(models.Model):
                 self.product_tmpl_id.product_revision_line[-1].document_wizard_line =  bom_wizard_line_list
 
         return eco
+
+    # Automatically move approved ECOs
+    def approve(self):
+        res = super(mrp_eco, self).approve()        
+        if self.approval_ids:
+            if self.allow_change_stage:
+                total_stages_list = self.stage_id.search([]).ids
+                index_number = total_stages_list.index(self.stage_id.id)
+                next_stage_id = total_stages_list[index_number+1]
+                next_stage_obj = self.stage_id.search([('id','=',next_stage_id)], limit=1)
+                self.stage_id = next_stage_obj                
+
+        return res
+
+  
+
+
+
+
+

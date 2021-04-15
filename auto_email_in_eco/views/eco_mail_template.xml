@@ -50,6 +50,12 @@
                                 <br/><br/>
                                 Thank you,<br/>                      
                                 ${ctx['email_from_usr']|safe}
+                                 <center>
+                                    <a href="${object.get_full_url()}"
+                                       style="background-color: #1abc9c; padding: 20px; text-decoration: none; color: #fff; border-radius: 5px; font-size: 16px;"
+                                       class="o_default_snippet_text">View ECO
+                                    </a>
+                                </center>
                                 
                             </p>
                         </td>
