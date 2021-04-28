@@ -53,10 +53,64 @@ class mrp_eco(models.Model):
 
                 self.product_tmpl_id.product_revision_line[-1].document_wizard_line =  bom_wizard_line_list
 
-        # new changes as per update to modified_bom
+        # new changes as per update to modified_bom (requirement point7)
         if self.type == "bom":
-            if not self.affected_part_line:
-                raise Warning(_("At least one product must be specified for this type of ECO."))
+            if self.new_bom_id.bom_line_ids:                 
+                if self.eco_production_state: #if user has add value in eco_production_state in eco                 
+                    for record in self.new_bom_id.bom_line_ids:
+                        if not record.product_tmpl_id.production_state.sequence >= self.eco_production_state.sequence:                                 
+                            if not self.affected_part_line:
+                                raise Warning(_("Please check the production state of components in BOM revision."))
+                            else:
+                                affected_product_tmpl_list = []
+                                for line in self.affected_part_line:
+                                    if line.production_state:
+                                        affected_product_tmpl_list.append(line.affected_product_id.id)
+                                if record.product_tmpl_id.id not in affected_product_tmpl_list:
+                                    raise Warning(_("Please check the production state of components in BOM revision."))
+
+                    if self.affected_part_line:
+                        for line in self.affected_part_line:
+                            if line.affected_product_id:
+                                new_bom_id_product_tmpl_list = []
+                                for record in self.new_bom_id.bom_line_ids:
+                                    new_bom_id_product_tmpl_list.append(record.product_tmpl_id.id)
+                                if line.affected_product_id.id in new_bom_id_product_tmpl_list:
+                                    if line.production_state:
+                                        # the production_state of products should be same or greater level than production state of header level production state
+                                        if not line.production_state.sequence >= self.eco_production_state.sequence:
+                                            raise Warning(_("Please check the production state of product '[%s]%s' in Affected Parts."% (line.affected_product_id.default_code,line.affected_product_id.name)))
+
+                else: #if not value in eco_production_state in eco
+                    if self.new_bom_id.product_tmpl_id.production_state:                  
+                        for record in self.new_bom_id.bom_line_ids:
+                            if not record.product_tmpl_id.production_state.sequence >=self.new_bom_id.product_tmpl_id.production_state.sequence:                                 
+                                if not self.affected_part_line:
+                                    raise Warning(_("Please check the production state of components in BOM revision."))
+                                else:
+                                    affected_product_tmpl_list = []
+                                    for line in self.affected_part_line:
+                                        if line.production_state:
+                                            affected_product_tmpl_list.append(line.affected_product_id.id)
+                                    if record.product_tmpl_id.id not in affected_product_tmpl_list:
+                                        raise Warning(_("Please check the production state of components in BOM revision."))
+
+                        if self.affected_part_line:
+                            for line in self.affected_part_line:
+                                if line.affected_product_id:
+                                    new_bom_id_product_tmpl_list = []
+                                    for record in self.new_bom_id.bom_line_ids:
+                                        new_bom_id_product_tmpl_list.append(record.product_tmpl_id.id)
+                                    if line.affected_product_id.id in new_bom_id_product_tmpl_list:
+                                        if line.production_state:
+                                            # the production_state of products should be same or greater level than production state of header level production state
+                                            if not line.production_state.sequence >= self.new_bom_id.product_tmpl_id.production_state.sequence:
+                                                raise Warning(_("Please check the production state of product '[%s]%s' in Affected Parts."% (line.affected_product_id.default_code,line.affected_product_id.name)))
+
+
+            if self.eco_production_state:
+                self.product_tmpl_id.production_state = self.eco_production_state
+
             if self.affected_part_line:
                 for line in self.affected_part_line:
                     if not(line.generate_revision or line.production_state):
@@ -84,25 +138,8 @@ class mrp_eco(models.Model):
                             line.affected_product_id.write({'product_revision_line':[(0,0,vals)]})
                             line.affected_product_id.product_revision_line[-1].document_wizard_line =  wizard_line_lst
 
-
-            if self.eco_production_state:
-                self.product_tmpl_id.production_state = self.eco_production_state
-
-                if self.bom_id.bom_line_ids:                    
-                    for record in self.bom_id.bom_line_ids:
-                        record.product_tmpl_id.production_state = self.eco_production_state              
-
-                    if self.affected_part_line:
-                        for line in self.affected_part_line:
-                            if line.affected_product_id:
-                                if line.production_state:                                
-                                        bom_id_product_tmpl_list = []
-                                        for record in self.bom_id.bom_line_ids:
-                                            bom_id_product_tmpl_list.append(record.product_tmpl_id.id)
-
-                                        if line.affected_product_id.id in bom_id_product_tmpl_list:
-                                            line.affected_product_id.production_state = line.production_state
-
+            
+            # make existed bom archived state and newly create bom in active state (point7)
             if self.affected_part_line:
                 for line in self.affected_part_line:
                     if line.new_partline_bom_id:                        
