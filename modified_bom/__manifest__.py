@@ -19,6 +19,9 @@
         'views/mrp_eco.xml',
         'wizard/bom_document_wizard.xml',
     ],
+    'qweb': [
+        "static/src/xml/template.xml",
+    ],
     'demo': [
     ],
 }
