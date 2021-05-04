@@ -22,9 +22,9 @@
         'views/list_renderer.xml'
         
     ],
-    'qweb': [
-        "static/src/xml/template.xml",
-    ],
+    # 'qweb': [
+    #     "static/src/xml/template.xml",
+    # ],
     'demo': [
     ],
 }
