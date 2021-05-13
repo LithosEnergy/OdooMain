@@ -17,6 +17,9 @@
                     <t t-if="widget.model == 'bom.document.wizard'">
                     <button type="button" class="btn btn-primary fa fa-paperclip o_select_file_button" title="Select"/>
                     </t>
+                    <t t-if="widget.model == 'document.wizard'">
+                    <button type="button" class="btn btn-primary fa fa-paperclip o_select_file_button" title="Select"/>
+                    </t>
                     <t t-else="">
                     <button type="button" class="btn btn-primary o_select_file_button" title="Select">Upload your file</button>
                     </t>
