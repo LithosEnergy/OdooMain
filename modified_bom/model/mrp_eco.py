@@ -107,6 +107,19 @@ class mrp_eco(models.Model):
                                             if not line.production_state.sequence >= self.new_bom_id.product_tmpl_id.production_state.sequence:
                                                 raise Warning(_("Please check the production state of product '[%s]%s' in Affected Parts."% (line.affected_product_id.default_code,line.affected_product_id.name)))
 
+                # condition added if no any production state added to components in bom revision
+                for record in self.new_bom_id.bom_line_ids:
+                    if not record.product_tmpl_id.production_state:
+                        if not self.affected_part_line:
+                            raise Warning(_("There is no any production state to some of components in BOM revision."))
+                        else:
+                            affected_product_tmpl_list_2 = []
+                            for line in self.affected_part_line:
+                                if line.production_state:
+                                    affected_product_tmpl_list_2.append(line.affected_product_id.id)
+                            if record.product_tmpl_id.id not in affected_product_tmpl_list_2:
+                                raise Warning(_("There is no any production state to some of components in BOM revision."))
+
 
             if self.eco_production_state:
                 self.product_tmpl_id.production_state = self.eco_production_state
