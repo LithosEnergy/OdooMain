@@ -13,6 +13,29 @@
                     <button name="upload_doc" string="Upload Documention" type="object" options='{"warn": true}' class="oe_edit_only oe_highlight" attrs="{'invisible': [('type', '!=', 'bom')]}"/>	
                     
                 </xpath>
+                <xpath expr="//field[@name='company_id']" position="after">
+                    <!-- <field name="eco_production_state" attrs="{'invisible': [('type', '!=', 'bom')]}"/> -->
+                    <field name ="copy_eco_production_state" string="Copy ECO Production State" invisible="1"/>
+                    <field name ="eco_production_state" options='{"no_open": True,"no_create": 1, "no_create_edit": 1}' domain="[('name', '!=', copy_eco_production_state)]" attrs="{'invisible': [('type', '!=', 'bom')]}"/>
+
+                </xpath>
+                <xpath expr="////form/sheet/notebook/page/field/tree/button[@name='upload_doc']" position="after">
+                    <field name="is_ecotype_bom" invisible="1"/>
+                    <field name="is_bomid_for_current_line" invisible="1"/>
+                    <!-- <button name="action_new_revision_for_partline" string="REVISE BOM" type="object" attrs="{'invisible': ['|',('is_ecotype_bom', '!=',True),('is_bomid_for_current_line', '=',True)]}"/>	 -->
+                    <button name="action_new_revision_for_partline" string="REVISE BOM" type="object" class="oe_highlight" attrs="{'invisible': ['|','|',('is_ecotype_bom', '!=',True),('is_bomid_for_current_line', '=',True),('generate_revision','=',False)]}"/>	
+
+                    <!-- <button name="open_new_bom_for_orderline" string="BOM Revision" type="object" attrs="{'invisible': [('is_bomid_for_current_line', '!=',True)]}">
+                    </button>
+                    <field name="new_partline_bom_revision" readonly="True"/> -->
+
+                    <button name="open_new_bom_for_orderline" type="object" string="BOM Revision" class="btn btn-secondary float-right" attrs="{'invisible': ['|',('is_bomid_for_current_line', '!=',True),('generate_revision','=',False)]}"/>
+                    <field name="new_partline_bom_revision" class="text-left" attrs="{'invisible': ['|',('is_bomid_for_current_line', '!=',True),('generate_revision','=',False)]}" string=" "/>
+
+                     
+
+                </xpath>
+
 
             </field>
         </record>  
