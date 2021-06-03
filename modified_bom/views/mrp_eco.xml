@@ -9,8 +9,10 @@
 
                 <xpath expr="//field[@name='tag_ids']" position="after">
                     <field name="bom_document_wizard_line" attrs="{'invisible': [('type', '!=', 'bom')]}" invisible="1"/>
+                    <field name="mrp_bom_wizard_line" invisible="1"/>
                     <field name="revision_notes" attrs="{'invisible': [('type', '!=', 'bom')]}"/>
                     <button name="upload_doc" string="Upload Documention" type="object" options='{"warn": true}' class="oe_edit_only oe_highlight" attrs="{'invisible': [('type', '!=', 'bom')]}"/>	
+                    <button name="add_product_from_wizard" string="add affected products" type="object" options='{"warn": true}' class="oe_highlight" attrs="{'invisible': [('type', '!=', 'bom')]}"/>
                     
                 </xpath>
                 <xpath expr="//field[@name='company_id']" position="after">

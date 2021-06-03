@@ -18,6 +18,9 @@
         'security/ir.model.access.csv',
         'views/mrp_eco.xml',
         'wizard/bom_document_wizard.xml',
+        'views/product_revision.xml',
+        'views/mrp_eco_stage.xml',
+        'wizard/mrp_bom_line_wizard.xml',
     ],
     'qweb': [
         "static/src/xml/template.xml",
