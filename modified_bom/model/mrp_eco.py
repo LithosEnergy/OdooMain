@@ -34,6 +34,15 @@ class mrp_eco(models.Model):
     def action_apply(self):  
         eco = super(mrp_eco, self).action_apply()
         if self.type == "bom":
+            if self.new_bom_id:
+                if self.new_bom_id.product_tmpl_id:
+                    vals = {
+                            'bom_version':self.new_bom_id.version,
+                            'revision':self.new_bom_id.product_tmpl_id.version,
+                        }
+                    self.new_bom_id.product_tmpl_id.write({'product_revision_line':[(0,0,vals)]})           
+
+
             # The user does not populate a new production state value and attempts to submit the ECO change then show error(modified_bom2)
             if self.mrp_bom_wizard_line:
                 affected_products_list_with_production_state = []
