@@ -31,16 +31,16 @@ class mrp_eco(models.Model):
     def add_document(self):
         print("Done")        
 
-    def action_apply(self):  
+    def action_apply(self): 
         eco = super(mrp_eco, self).action_apply()
         if self.type == "bom":
-            if self.new_bom_id:
-                if self.new_bom_id.product_tmpl_id:
-                    vals = {
-                            'bom_version':self.new_bom_id.version,
-                            'revision':self.new_bom_id.product_tmpl_id.version,
-                        }
-                    self.new_bom_id.product_tmpl_id.write({'product_revision_line':[(0,0,vals)]})           
+            # if self.new_bom_id:
+            #     if self.new_bom_id.product_tmpl_id:
+            #         vals = {
+            #                 'bom_version':self.new_bom_id.version,
+            #                 'revision':self.new_bom_id.product_tmpl_id.version,
+            #             }
+            #         self.new_bom_id.product_tmpl_id.write({'product_revision_line':[(0,0,vals)]})           
 
 
             # The user does not populate a new production state value and attempts to submit the ECO change then show error(modified_bom2)
@@ -59,8 +59,8 @@ class mrp_eco(models.Model):
 
 
         if self.type == "bom":
-            if self.bom_document_wizard_line:                
-                bom_wizard_line_list = []
+            bom_wizard_line_list = []
+            if self.bom_document_wizard_line:
                 for line in self.bom_document_wizard_line:
                     bom_wizard_line_list.append((0, 0, {
                                         'item_number': line.bom_item_number,
@@ -70,13 +70,16 @@ class mrp_eco(models.Model):
                                         'bom_document_wizard_test':True,
                                     }))
 
-                # self.product_tmpl_id.version = self.product_tmpl_id.version #product verison incremented in base automatically
-                vals = {
-                        'revision':self.product_tmpl_id.version,
-                        'notes':self.revision_notes
-                    }
-                self.product_tmpl_id.write({'product_revision_line':[(0,0,vals)]})              
+            # self.product_tmpl_id.version = self.product_tmpl_id.version #product verison incremented in base automatically
+            vals = {
+                    'revision':self.product_tmpl_id.version,
+                    'notes':self.revision_notes
+                }
+            if self.new_bom_id:
+                vals['bom_version'] = self.new_bom_id.version
+            self.product_tmpl_id.write({'product_revision_line':[(0,0,vals)]}) 
 
+            if bom_wizard_line_list:
                 self.product_tmpl_id.product_revision_line[-1].document_wizard_line =  bom_wizard_line_list
 
         # new changes as per update to modified_bom (requirement point7)
