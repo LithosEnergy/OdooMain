@@ -11,6 +11,7 @@ class mrp_eco(models.Model):
 
     # mrp_bom_line_wizard = fields.One2many('mrp.bom.line.wizard','abc',string="Mrp Bom Line Wizard")
     mrp_bom_wizard_line = fields.One2many('mrp.bom.line.wizard', 'eco_id_for_bom_line_wizard', string='mrp bom wizard line')
+    stage_id_check_production_state = fields.Boolean(related="stage_id.check_production_state",string="Current stage check production state")
 
     def upload_doc(self):        
     	view_id = self.env.ref('modified_bom.mrp_eco_wizard_form').id
@@ -214,71 +215,60 @@ class mrp_eco(models.Model):
 
 
     def add_product_from_wizard(self):
-        total_stages_list = self.stage_id.search([]).ids
-        index_number = total_stages_list.index(self.stage_id.id)
-        if len(total_stages_list) > index_number+1:
-            next_stage_id = total_stages_list[index_number+1]
-            next_stage_obj = self.stage_id.search([('id','=',next_stage_id)], limit=1)
-            if next_stage_obj.check_production_state:                
-                if not self.new_bom_id:
-                    raise Warning(_("NO BOM revision available."))
-                if not self.new_bom_id.product_tmpl_id.production_state:
-                    raise Warning(_("No production state avaiable for BOM product's."))
+        if not self.new_bom_id:
+            raise Warning(_("NO BOM revision available."))
+        if not self.new_bom_id.product_tmpl_id.production_state:
+            raise Warning(_("No production state avaiable for BOM product's."))
 
-                if self.mrp_bom_wizard_line:
-                    self.mrp_bom_wizard_line.unlink()
-                
-                mrp_bom_wizard_line_list = []
-                for record in self.new_bom_id.bom_line_ids:
-                    if (not record.product_tmpl_id.production_state.sequence >=self.new_bom_id.product_tmpl_id.production_state.sequence) or (not record.product_tmpl_id.production_state):
-                            mrp_bom_wizard_line_list.append((0, 0, {
-                                                'affected_product_id': record.product_tmpl_id.id,
-                                            }))
-                if mrp_bom_wizard_line_list:
-                    self.mrp_bom_wizard_line =  mrp_bom_wizard_line_list
+        if self.mrp_bom_wizard_line:
+            self.mrp_bom_wizard_line.unlink()
+        
+        mrp_bom_wizard_line_list = []
+        for record in self.new_bom_id.bom_line_ids:
+            if (not record.product_tmpl_id.production_state.sequence >=self.new_bom_id.product_tmpl_id.production_state.sequence) or (not record.product_tmpl_id.production_state):
+                    mrp_bom_wizard_line_list.append((0, 0, {
+                                        'affected_product_id': record.product_tmpl_id.id,
+                                    }))
+        if mrp_bom_wizard_line_list:
+            self.mrp_bom_wizard_line =  mrp_bom_wizard_line_list
 
-                    affected_products_list = []
-                    affected_products_list_with_production_state = []
-                    if self.affected_part_line:
-                        for line in self.affected_part_line:
-                            affected_products_list.append(line.affected_product_id.id)
-                            affected_products_list_with_production_state.append({'affected_product_id':line.affected_product_id.id,'production_state':line.production_state})
+            affected_products_list = []
+            affected_products_list_with_production_state = []
+            if self.affected_part_line:
+                for line in self.affected_part_line:
+                    affected_products_list.append(line.affected_product_id.id)
+                    affected_products_list_with_production_state.append({'affected_product_id':line.affected_product_id.id,'production_state':line.production_state})
 
-                    for line in self.mrp_bom_wizard_line:
-                        if line.affected_product_id.id in affected_products_list:#if wizard line product_id is available in affected part line product list
-                            line.is_product_available_in_eco = True
-                            line.status = "On ECO"
-                        for record in affected_products_list_with_production_state:
-                            if record['affected_product_id'] == line.affected_product_id.id:
-                                if record['production_state']:
-                                    line.production_state = record['production_state']
-                                    line.is_changed_production_state = True
-                                else:
-                                    line.production_state = line.affected_product_id.production_state
+            for line in self.mrp_bom_wizard_line:
+                if line.affected_product_id.id in affected_products_list:#if wizard line product_id is available in affected part line product list
+                    line.is_product_available_in_eco = True
+                    line.status = "On ECO"
+                for record in affected_products_list_with_production_state:
+                    if record['affected_product_id'] == line.affected_product_id.id:
+                        if record['production_state']:
+                            line.production_state = record['production_state']
+                            line.is_changed_production_state = True
+                        else:
+                            line.production_state = line.affected_product_id.production_state
 
-                else:
-                    raise Warning(_("No components whose production states are lower than the current BOM product's production state."))
-                    
-
-
-                view_id = self.env.ref('modified_bom.custom_mrp_eco_wizard_form').id
-                return {
-                    'name':'The below components have production states which are lower than production state of product "[{}]{}". You can not move this ECO to stage "{}" unless they are updated.'.format(self.new_bom_id.product_tmpl_id.default_code,self.new_bom_id.product_tmpl_id.name,next_stage_obj.name),
-                    'view_type':'form',
-                    'view_mode':'tree',
-                    'views' : [(view_id,'form')],
-                    'res_model':'mrp.eco',
-                    'view_id':view_id,
-                    'type':'ir.actions.act_window',
-                    'res_id':self.id,
-                    'target':'new',
-                    # 'context':context,
-                }
-            else:
-                raise Warning(_("Please activate field 'Check Production state' of next stage '{}'.".format(next_stage_obj.name)))
-            
         else:
-            raise Warning(_("'{}' is the last stage.".format(self.stage_id.name)))
+            raise Warning(_("No components whose production states are lower than the current BOM product's production state."))
+            
+
+
+        view_id = self.env.ref('modified_bom.custom_mrp_eco_wizard_form').id
+        return {
+            'name':'The below components have production states which are lower than production state of product "[{}]{}".'.format(self.new_bom_id.product_tmpl_id.default_code,self.new_bom_id.product_tmpl_id.name),
+            'view_type':'form',
+            'view_mode':'tree',
+            'views' : [(view_id,'form')],
+            'res_model':'mrp.eco',
+            'view_id':view_id,
+            'type':'ir.actions.act_window',
+            'res_id':self.id,
+            'target':'new',
+            # 'context':context,
+        }
 
 
     def add_products(self):
