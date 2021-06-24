@@ -243,6 +243,9 @@ class mrp_eco(models.Model):
                 if line.affected_product_id.id in affected_products_list:#if wizard line product_id is available in affected part line product list
                     line.is_product_available_in_eco = True
                     line.status = "On ECO"
+                else:
+                    line.production_state = line.affected_product_id.production_state
+
                 for record in affected_products_list_with_production_state:
                     if record['affected_product_id'] == line.affected_product_id.id:
                         if record['production_state']:
