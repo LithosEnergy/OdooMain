@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_BomStructureReportWizard_form" model="ir.ui.view">
+        <field name="name">bom.structure.report.wizard.form</field>
+        <field name="model">bom.structure.report.wizard</field>
+        <field name="arch" type="xml">
+            <form string="BOM Structure Report">
+                <separator string="Please check file name of the report" colspan="4" attrs="{'invisible': [('state','=', 'done')]}"/>
+                <separator string="Your Report File is Ready to Download" colspan="4" attrs="{'invisible': [('state','=', 'draft')]}"/>
+                <group col="2">
+                    <field name="state" invisible="1" nolabel="1"/>
+                </group>
+                <field name="file_name" attrs="{'invisible': [('state','=', 'done')]}" required="1"/>
+                <field name="data" filename="file_name" attrs="{'invisible': [('state','=', 'draft')]}" readonly="1"/>
+                <footer>
+                    <button string="Print" class="oe_highlight" states="draft" type="object" name="get_print_report"/>
+                    <!-- <label string="or" attrs="{'invisible':[('state','=','done')]}"/> -->
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                </footer>               
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="act_open_BomStructureReportWizard_view">
+        <field name="name">BOM Structure Report</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">bom.structure.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+    
+    <record model="ir.actions.act_window.view" id="act_open_BomStructureReportWizard_view_form">
+        <field name="act_window_id" ref="act_open_BomStructureReportWizard_view"/>
+        <field name="sequence" eval="20"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_BomStructureReportWizard_form"/>
+    </record>
+
+    <act_window name="BOM Structure Excel Report"
+        res_model="bom.structure.report.wizard"
+        binding_model ="mrp.bom"              
+        target="new"
+        view_mode="form"
+        id="action_bom_xls_report_view"/>
+</odoo>
