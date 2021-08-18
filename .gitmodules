@@ -1,0 +1,4 @@
+[submodule "pico-mes/pico-odoo"]
+	path = pico-mes/pico-odoo
+	url = git@github.com:pico-mes/pico-odoo.git
+	branch = 13.0
