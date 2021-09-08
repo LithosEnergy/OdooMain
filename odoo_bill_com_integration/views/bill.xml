@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+        <record id="inherit_view_move_form" model="ir.ui.view">
+            <field name="name">inherit_view_account_move_form</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+                  <xpath expr="//form/sheet/group/group" position="inside">
+                        <field name="bill_sync" attrs="{'invisible': [('type', '!=', 'in_invoice')]}"/>
+                        <field name="bill_id" attrs="{'invisible': [('type', '!=', 'in_invoice')]}"/>
+                        <field name="token" attrs="{'invisible': [('type', '!=', 'in_invoice')]}"/>
+                  </xpath>
+                  <xpath expr="//form/header/button[@name='action_invoice_register_payment']" position="after">
+                        <button name="custom_action_invoice_register_payment"
+                              type="object" class="oe_highlight"
+                              attrs="{'invisible': ['|', '|', ('state', '!=', 'posted'), ('invoice_payment_state', '!=', 'not_paid'), ('type', 'not in', ('in_invoice'))]}"
+                              string="Custom Register Payment"/>
+                        <button name="pay_amount"
+                              type="object" class="oe_highlight"
+                              attrs="{'invisible': ['|', '|', ('state', '!=', 'posted'), ('invoice_payment_state', '!=', 'not_paid'), ('type', 'not in', ('in_invoice'))]}"
+                              string="pay amount"/>
+                  </xpath>
+                  <xpath expr="//form/header/button[@name='action_invoice_register_payment']" position="replace">
+                        <button name="action_invoice_register_payment" id="account_invoice_payment_btn"
+                                type="object" class="oe_highlight"
+                                attrs="{'invisible': ['|', '|', ('state', '!=', 'posted'), ('invoice_payment_state', '!=', 'not_paid'), ('type', 'not in', ('out_invoice', 'out_refund', 'in_refund', 'out_receipt', 'in_receipt'))]}"
+                                string="Register Payment"
+                                groups="account.group_account_invoice"/>
+                  </xpath>
+
+            </field>
+      </record>
+    </data>
+</odoo>
