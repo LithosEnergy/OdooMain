@@ -201,11 +201,9 @@ class ReportBomStructure(models.AbstractModel):
         return components, total
 
     def _get_pdf_line(self, bom_id, product_id=False, qty=1, child_bom_ids=[], unfolded=False):
-
-        data = self._get_bom(bom_id=bom_id, product_id=product_id.id, line_qty=qty)
-
+        data = self._get_bom(bom_id=bom_id, product_id=product_id, line_qty=qty)
         def get_sub_lines(bom, product_id, line_qty, line_id, level):
-            data = self._get_bom(bom_id=bom.id, product_id=product_id.id, line_qty=line_qty, line_id=line_id,
+            data = self._get_bom(bom_id=bom.id, product_id=product_id, line_qty=line_qty, line_id=line_id,
                                  level=level)
             bom_lines = data['components']
             lines = []
