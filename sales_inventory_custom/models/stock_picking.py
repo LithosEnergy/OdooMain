@@ -19,7 +19,7 @@ class StockPicking(models.Model):
 							('cancel','Cancel')], 
 							string="New State", compute="_compute_new_state", copy=False)
 	submit_approval = fields.Boolean(string="Submit Approval",copy=False)
-	state = fields.Selection(selection_add=[('need_approval', 'Need Approval')])
+	state = fields.Selection(selection_add=[('need_approval', 'Needs Approval')])
 	fully_approved = fields.Boolean(compute="_compute_fully_approved", copy=False)
 	valid_for_approval = fields.Boolean(compute="_compute_valid_for_approval", copy=False)
 	valid_for_reject = fields.Boolean(compute="_compute_valid_for_reject", copy=False)
