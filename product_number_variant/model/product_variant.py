@@ -58,6 +58,9 @@ class product_template_inherit(models.Model):
                     res.name = self.name
                     res.default_code = final_part_number + final_char
                     new_product_id = res.id
+                    default_production_state = self.env['production.state'].search([("default",'=',True)],limit=1)
+                    if default_production_state:
+                        res.production_state = default_production_state
                     return res.id
                                         
                     # return {

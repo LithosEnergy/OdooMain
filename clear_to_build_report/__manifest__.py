@@ -12,9 +12,10 @@
     """,
     'category': 'mrp',
     'images': [],
-    'depends': ['base', 'mrp', 'purchase', 'zip_quality'],
+    'depends': ['base', 'mrp', 'purchase'],
     'data': [
         'views/mrp_templates.xml',
+        'views/stock_location_views.xml',        
         'report/mrp_report_bom_structure.xml',
     ],
     'qweb': ['static/src/xml/mrp.xml'],
