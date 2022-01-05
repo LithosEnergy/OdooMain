@@ -11,7 +11,7 @@ class StockPicking(models.Model):
 	approval_line_ids = fields.One2many('stock.approval.line', 'picking_approve_id', string="approvals")
 	new_state = fields.Selection([
 							('draft','Draft'),
-							('need_approval','Need Approval'),
+							('need_approval','Needs Approval'),
 							('waiting','Waiting Another Operation'),
 							('confirmed','Waiting'),
 							('assigned','Ready'),
