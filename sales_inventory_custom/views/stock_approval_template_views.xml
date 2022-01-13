@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+   <!--  Approval template Tree View -->
+    <record id="view_stock_transfer_approval_temp_tree" model="ir.ui.view">
+        <field name="name">view.stock.transfer.approval.temp.tree</field>
+        <field name="model">stock.transfer.approval.temp</field>
+        <field name="priority">10</field>
+        <field name="arch" type="xml">
+            <tree string="Approval Templates">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+   <!--  Approval template Form View -->
+    <record id="view_stock_transfer_approval_temp_form" model="ir.ui.view">
+        <field name="name">view.stock.transfer.approval.temp.form</field>
+        <field name="model">stock.transfer.approval.temp</field>
+        <field name="arch" type="xml">
+            <form string="Approval Templates" create="false">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                    </group>        
+                    <notebook> 
+                        <page name="approval_item" string="Approvals">
+                            <group>
+                                <field name="approval_item_ids" nolabel="1">
+                                    <tree editable="bottom">
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="name"/>
+                                        <field name="user_ids" widget="many2many_tags"/>
+                                        <field name="approval_type"/>     
+                                    </tree>
+                                </field>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+   <!--  Approval template Action -->
+    <record id="action_stock_approvals" model="ir.actions.act_window">
+        <field name="name">Stock Approval Templates</field>
+        <field name="res_model">stock.transfer.approval.temp</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+   <!--  Approval template MenuItem -->
+    <menuitem
+        id="approvals_menu_root"
+        name="Approval Templates"
+        parent="stock.menu_warehouse_config"
+        action="action_stock_approvals"
+        sequence="101"/>
+</odoo>
