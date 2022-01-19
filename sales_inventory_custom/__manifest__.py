@@ -8,7 +8,7 @@
     'description': """
             Sales Inventory 
         """,
-    'version': '13.0.0.1',
+    'version': '13.0.0.2',
     'depends': [
                 'sale_management',
                 'sale_stock',
