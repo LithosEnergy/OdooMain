@@ -10,7 +10,7 @@
                 <xpath expr="//field[@name='company_id']" position="after">
                     <field name='production_state'/>                    
                 </xpath>
-                
+
                 <xpath expr="///page[@name='purchase']" position="inside">
                 <group string="Manufacturer Information">
                     <group>

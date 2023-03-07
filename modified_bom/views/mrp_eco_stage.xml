@@ -6,7 +6,7 @@
                 <field name="model">mrp.eco.stage</field>
                 <field name="inherit_id" ref="mrp_plm.mrp_eco_stage_view_form" />
                 <field name="arch" type="xml">
-                    <xpath expr="//field[@name='type_id']" position="after">                        
+                    <xpath expr="//field[@name='type_ids']" position="after">
                         <field name="check_production_state"/>  
                     </xpath>
                 </field>

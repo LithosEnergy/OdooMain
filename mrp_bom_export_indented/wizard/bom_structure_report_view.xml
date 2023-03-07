@@ -5,8 +5,10 @@
         <field name="model">bom.structure.report.wizard</field>
         <field name="arch" type="xml">
             <form string="BOM Structure Report">
-                <separator string="Please check file name of the report" colspan="4" attrs="{'invisible': [('state','=', 'done')]}"/>
-                <separator string="Your Report File is Ready to Download" colspan="4" attrs="{'invisible': [('state','=', 'draft')]}"/>
+                <separator string="Please check file name of the report" colspan="4"
+                           attrs="{'invisible': [('state','=', 'done')]}" style="font-size: 1.625rem; margin: 5px 0;"/>
+                <separator string="Your Report File is Ready to Download" colspan="4"
+                           attrs="{'invisible': [('state','=', 'draft')]}" style="font-size: 1.625rem; margin: 5px 0;"/>
                 <group col="2">
                     <field name="state" invisible="1" nolabel="1"/>
                 </group>
@@ -16,30 +18,32 @@
                     <button string="Print" class="oe_highlight" states="draft" type="object" name="get_print_report"/>
                     <!-- <label string="or" attrs="{'invisible':[('state','=','done')]}"/> -->
                     <button string="Cancel" class="oe_link" special="cancel"/>
-                </footer>               
+                </footer>
             </form>
         </field>
     </record>
 
-    <record model="ir.actions.act_window" id="act_open_BomStructureReportWizard_view">
-        <field name="name">BOM Structure Report</field>
-        <field name="type">ir.actions.act_window</field>
-        <field name="res_model">bom.structure.report.wizard</field>
-        <field name="view_mode">form</field>
-        <field name="target">new</field>
+    <record model="ir.actions.server" id="action_bom_xls_report_view">
+        <field name="name">BOM Structure Excel Report</field>
+        <field name="model_id" ref="mrp.model_mrp_bom"/>
+        <field name="binding_model_id" ref="mrp.model_mrp_bom"/>
+        <field name="groups_id" eval="[(4, ref('base.group_user'))]"/>
+        <field name="binding_view_types">form</field>
+        <field name="state">code</field>
+        <field name="code">
+            if record:
+                action_values = {
+                'type': 'ir.actions.act_window',
+                'res_model': 'bom.structure.report.wizard',
+                'target': 'new',
+                'views': [(env.ref('mrp_bom_export_indented.view_BomStructureReportWizard_form').id, 'form')],
+                }
+                action_values.update(
+                {
+                'context': env.context
+                }
+                )
+                action = action_values
+        </field>
     </record>
-    
-    <record model="ir.actions.act_window.view" id="act_open_BomStructureReportWizard_view_form">
-        <field name="act_window_id" ref="act_open_BomStructureReportWizard_view"/>
-        <field name="sequence" eval="20"/>
-        <field name="view_mode">form</field>
-        <field name="view_id" ref="view_BomStructureReportWizard_form"/>
-    </record>
-
-    <act_window name="BOM Structure Excel Report"
-        res_model="bom.structure.report.wizard"
-        binding_model ="mrp.bom"              
-        target="new"
-        view_mode="form"
-        id="action_bom_xls_report_view"/>
 </odoo>

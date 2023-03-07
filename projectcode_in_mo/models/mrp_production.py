@@ -1,11 +1,7 @@
-from odoo import models,fields,api
+from odoo import models, fields
 
 
 class MRPProduction(models.Model):
-    _inherit ="mrp.production"
+    _inherit = "mrp.production"
 
     project_code = fields.Char(string="Project Code")
-
-
-
-

@@ -1,7 +1,5 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-
 access_stock_transfer_approval_temp,access_stock_transfer_approval_temp,model_stock_transfer_approval_temp,base.group_user,1,1,1,1
 access_stock_transfer_approval_temp_items,access_stock_transfer_approval_temp_items,model_stock_transfer_approval_temp_items,base.group_user,1,1,1,1
 access_stock_approval_line,access_stock_approval_line,model_stock_approval_line,base.group_user,1,1,1,1
-
 access_stock_approval_history,access_stock_approval_history,model_stock_approval_history,base.group_user,1,1,1,1

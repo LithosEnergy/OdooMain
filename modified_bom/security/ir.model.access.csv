@@ -1,7 +1,5 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-
 access_bom_document_wizard_user,access_bom_document_wizard_user,model_bom_document_wizard,mrp_plm.group_plm_user,1,1,1,1,
 access_bom_document_wizard_manager,access_bom_document_wizard_manager,model_bom_document_wizard,mrp_plm.group_plm_manager,1,1,1,1,
-
 access_mrp_bom_line_wizard_user,access_mrp_bom_line_wizard_user,model_mrp_bom_line_wizard,mrp_plm.group_plm_user,1,1,1,1,
 access_mrp_bom_line_wizard_manager,access_mrp_bom_line_wizard_manager,model_mrp_bom_line_wizard,mrp_plm.group_plm_manager,1,1,1,1,

@@ -1,8 +1,7 @@
-from odoo import models, fields, api, _
+from odoo import models, fields
 
 
-class Res_Partner(models.Model):
-    _inherit = 'res.partner'
+class ResPartner(models.Model):
+    _inherit = "res.partner"
 
-    manufacturer = fields.Boolean("Manufacturer")
-
+    manufacturer = fields.Boolean("Manufacturer", default=False, copy=False)

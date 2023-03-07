@@ -1,10 +1,12 @@
-from odoo import models, fields, api, _
-from odoo.exceptions import AccessError, UserError, RedirectWarning, ValidationError, Warning
+from odoo import models, fields
+
 
 class InheritMrpBom(models.Model):
     _inherit = "mrp.bom"
 
-    component_count = fields.Integer(string="Component Count",compute='_component_count')
+    component_count = fields.Integer(
+        string="Component Count", compute="_component_count"
+    )
 
     def _component_count(self):
 

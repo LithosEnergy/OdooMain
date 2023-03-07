@@ -1,4 +1,4 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-
 access_production_state_user,access_production_state_user,model_production_state,mrp_plm.group_plm_user,1,1,1,1,
 access_production_state_manager,access_production_state_manager,model_production_state,mrp_plm.group_plm_manager,1,1,1,1,
+access_generate_product_wizard,access_generate_product_wizard,model_generate_product_wizard,mrp_plm.group_plm_manager,1,1,1,1,

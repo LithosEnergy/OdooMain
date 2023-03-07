@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <data>
-
         <!-- hide 'action_new_revision' button if eco apply_on set to product only -->
         <record id="inherit_mrp_eco_view_form" model="ir.ui.view">
                 <field name="name">inherit.mrp.eco.view.form</field>
@@ -9,7 +8,15 @@
                 <field name="inherit_id" ref="mrp_plm.mrp_eco_view_form" />
                 <field name="arch" type="xml">
                     <xpath expr="//form/header/button[@name='action_new_revision']" position="replace">
-                        <button string="Start New Revision" name="action_new_revision" type="object" class="oe_highlight" attrs="{'invisible': ['|',('state', '!=', 'confirmed'),('type','=','product')]}"/>
+                        <button string="Start New Revision"
+                                name="action_new_revision"
+                                type="object"
+                                class="oe_highlight"
+                                attrs="{'invisible': ['|',
+                                ('state', '!=', 'confirmed'),
+                                ('type','=','product')
+                                ]}"
+                        />
                     </xpath>
                 </field>
         </record>
