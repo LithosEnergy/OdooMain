@@ -13,6 +13,7 @@
     "website": "https://www.sfour.io/",
     "category": "Manufacturing",
     "version": "15.0.0.1.0",
+    "license" : "OPL-1",
     "depends": [
         "base",
         "mrp_plm",

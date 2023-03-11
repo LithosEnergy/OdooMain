@@ -12,6 +12,7 @@
                   2. It will show project code automatically in
                   manufacturing order also it will be editable """,
     "author": "Techspawn Solutions Pvt. Ltd.",
+    "license" : "OPL-1",
     "websites": "http://www.techspawn.com",
     "depends": ["sale_management", "mrp"],
     "installable": True,
