@@ -12,6 +12,7 @@
     ],
     "demo": [],
     "qweb": [],
+    "license" : "OPL-1",
     "installable": True,
     "application": True,
 }

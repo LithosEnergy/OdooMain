@@ -10,6 +10,7 @@ import base64
 
 class BomStructureReportWizard(models.TransientModel):
     _name = "bom.structure.report.wizard"
+    _description = "Bom Structure Report Wizard"
 
     state = fields.Selection(
         [("draft", "Draft"), ("done", "Done")], "State", default="draft"
