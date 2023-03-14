@@ -9,7 +9,7 @@
             <field eval="7" name="priority"/>
             <field name="arch" type="xml">                
                 <xpath expr="//field[@name='revision']" position="after">                                                     
-                    <field name ="bom_version"/>
+                    <field name ="bom_version" force_save="1"/>
                 </xpath>
             </field>
         </record>  

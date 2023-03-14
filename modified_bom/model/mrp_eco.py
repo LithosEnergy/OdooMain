@@ -54,7 +54,7 @@ class MrpEco(models.Model):
 
     @property
     def action_apply(self):
-        eco = super(MrpEco, self).action_apply
+        eco = super(MrpEco, self).action_apply()
         if self.type == "bom":
             # The user does not populate a new production state
             # value and attempts to submit the ECO change then

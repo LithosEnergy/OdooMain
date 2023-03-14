@@ -8,7 +8,7 @@ class inherit_MrpEco(models.Model):
     _inherit = "mrp.eco"
 
     def action_apply(self):
-        eco = super(inherit_MrpEco, self).action_apply
+        eco = super(inherit_MrpEco, self).action_apply()
         if self.type == "bom":
             if self.new_bom_id:
                 if self.new_bom_id.bom_line_ids:

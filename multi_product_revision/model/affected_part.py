@@ -10,7 +10,7 @@ class InheritedMrpEco(models.Model):
     )
 
     def action_apply(self):
-        eco = super(InheritedMrpEco, self).action_apply
+        eco = super(InheritedMrpEco, self).action_apply()
         if self.type == "product":
             if not self.affected_part_line:
                 raise UserError(
