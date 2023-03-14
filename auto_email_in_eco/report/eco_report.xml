@@ -106,19 +106,16 @@
             </t>
         </template>
 
-
-        <report 
-            string="ECO Custom report" 
-            id="action_report_mrp_eco"
-            model="mrp.eco"
-            paperformat="auto_email_in_eco.paperformat_custom_report"
-            name="auto_email_in_eco.report_mrpeco"
-            file="auto_email_in_eco.report_mrpeco"
-            report_type="qweb-pdf"
-        />
-
-
-        
+         <record id="action_report_mrp_eco" model="ir.actions.report">
+            <field name="name">ECO Custom report</field>
+            <field name="model">mrp.eco</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">auto_email_in_eco.report_mrpeco</field>
+            <field name="report_file">auto_email_in_eco.report_mrpeco</field>
+            <field name="binding_model_id" ref="model_mrp_eco"/>
+            <field name="binding_type">report</field>
+            <field name="paperformat_id" ref="paperformat_custom_report"/>
+         </record>
 
     </data>
 </odoo>

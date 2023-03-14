@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<odoo>
-    <template id="custom_assets" inherit_id="web.assets_backend">
-        <xpath expr="." position="inside">
-<!--            <script type="text/javascript" src="/boms_via_plm/static/src/js/pager.js"/>-->
-            <script type="text/javascript" src="/boms_via_plm/static/src/js/custom_form_view.js"/>
-        </xpath>
-    </template>
-</odoo>

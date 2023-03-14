@@ -1,9 +1,6 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-
 access_product_revisions_user,access_product_revisions_user,model_product_revisions,mrp_plm.group_plm_user,1,1,1,1,
 access_product_revisions_manager,access_product_revisions_manager,model_product_revisions,mrp_plm.group_plm_manager,1,1,1,1,
-
 access_mrp_eco_product,access_mrp_eco_product,model_mrp_eco_product,base.group_system,1,1,1,1,
-
 access_document_wizard_user,access_document_wizard_user,model_document_wizard,mrp_plm.group_plm_user,1,1,1,1,
 access_document_wizard_manager,access_document_wizard_manager,model_document_wizard,mrp_plm.group_plm_manager,1,1,1,1,

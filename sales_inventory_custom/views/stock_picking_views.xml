@@ -94,15 +94,4 @@
             </xpath>
         </field>
     </record>
-
-    <record id="view_picking_type_form_inherit" model="ir.ui.view">
-        <field name="name">view.picking.type.form.inherit</field>
-        <field name="model">stock.picking.type</field>
-        <field name="inherit_id" ref="stock.view_picking_type_form"/>
-        <field name="arch" type="xml">
-            <xpath expr="//field[@name='warehouse_id']" position="after">
-                <field name="type_approval_id" string="Approval Template"/>
-            </xpath>
-        </field>
-    </record>
 </odoo>

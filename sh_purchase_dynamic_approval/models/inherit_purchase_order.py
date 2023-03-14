@@ -88,11 +88,13 @@ class PurchaseOrder(models.Model):
                 notifications = []
                 if users:
                     for user in users:
-                        notifications.append([
-                            (self._cr.dbname, 'res.partner', user.partner_id.id),
-                            {'type': 'user_connection', 'title': _(
-                                'Notitification'), 'message': 'You have approval notification for Purchase order %s' % (self.name), 'sticky': True, 'warning': True}])
-                    self.env['bus.bus'].sendmany(notifications)
+                        notifications.append(
+                            (user.partner_id, 'sh_notification_info', 
+                            {'title': _('Notitification'),
+                             'message': 'You have approval notification for Purchase order %s' % (self.name)
+                            }))
+                    self.env['bus.bus']._sendmany(notifications)
+
 
             if lines[0].approve_by == 'user':
                 self.write({
@@ -109,11 +111,13 @@ class PurchaseOrder(models.Model):
                 notifications = []
                 if lines[0].user_ids:
                     for user in lines[0].user_ids:
-                        notifications.append([
-                            (self._cr.dbname, 'res.partner', user.partner_id.id),
-                            {'type': 'user_connection', 'title': _(
-                                'Notitification'), 'message': 'You have approval notification for Purchase order %s' % (self.name), 'sticky': True, 'warning': True}])
-                    self.env['bus.bus'].sendmany(notifications)
+                        notifications.append(
+                            (user.partner_id, 'sh_notification_info', 
+                            {'title': _('Notitification'),
+                             'message': 'You have approval notification for Purchase order %s' % (self.name)
+                            }))
+                    self.env['bus.bus']._sendmany(notifications)
+
 
         else:
             super(PurchaseOrder, self).button_confirm()
@@ -202,14 +206,16 @@ class PurchaseOrder(models.Model):
                         template_id.sudo().send_mail(self.id, force_send=True, email_values={
                             'email_from': self.env.user.email, 'email_to': user.email})
 
+                
                 notifications = []
                 if users:
                     for user in users:
-                        notifications.append([
-                            (self._cr.dbname, 'res.partner', user.partner_id.id),
-                            {'type': 'user_connection', 'title': _(
-                                'Notitification'), 'message': 'You have approval notification for Purchase order %s' % (self.name), 'sticky': True, 'warning': True}])
-                    self.env['bus.bus'].sendmany(notifications)
+                        notifications.append(
+                            (user.partner_id, 'sh_notification_info', 
+                            {'title': _('Notitification'),
+                             'message': 'You have approval notification for Purchase order %s' % (self.name)
+                            }))
+                    self.env['bus.bus']._sendmany(notifications)
 
             if next_line.approve_by == 'user':
                 self.write({
@@ -230,11 +236,13 @@ class PurchaseOrder(models.Model):
                 notifications = []
                 if next_line.user_ids:
                     for user in next_line.user_ids:
-                        notifications.append([
-                            (self._cr.dbname, 'res.partner', user.partner_id.id),
-                            {'type': 'user_connection', 'title': _(
-                                'Notitification'), 'message': 'You have approval notification for Purchase order %s' % (self.name), 'sticky': True, 'warning': True}])
-                    self.env['bus.bus'].sendmany(notifications)
+                        notifications.append(
+                            (user.partner_id, 'sh_notification_info', 
+                            {'title': _('Notitification'),
+                             'message': 'You have approval notification for Purchase order %s' % (self.name)
+                            }))
+                    self.env['bus.bus']._sendmany(notifications)
+
 
         else:
             template_id = self.env.ref(
@@ -243,13 +251,15 @@ class PurchaseOrder(models.Model):
                 template_id.sudo().send_mail(self.id, force_send=True, email_values={
                     'email_from': self.env.user.email, 'email_to': self.user_id.email})
 
+            
             notifications = []
             if self.user_id:
-                notifications.append([
-                    (self._cr.dbname, 'res.partner', self.user_id.partner_id.id),
-                    {'type': 'user_connection', 'title': _(
-                        'Notitification'), 'message': 'Dear User!! your Purchase order %s is confirmed' % (self.name), 'sticky': True, 'warning': True}])
-                self.env['bus.bus'].sendmany(notifications)
+                notifications.append(
+                            (self.user_id.partner_id, 'sh_notification_info', 
+                            {'title': _('Notitification'),
+                             'message': 'Dear User!! your Purchase order %s is confirmed' % (self.name)
+                            }))
+                self.env['bus.bus']._sendmany(notifications)
 
             self.write({
                 'level': False,

@@ -66,10 +66,8 @@ class BlanketWizard(models.TransientModel):
 											'price_subtotal':rec.subtotal,
 											'order_id':sale_order_id.id
 											})
-
-			record =self.env['orderline.orderline'].search([('id','=',rec.blanket_order_line_id.id)])
-			record.update({'quantity':record.quantity - rec.new_quatation_quantity,'remaining_quantity':record.remaining_quantity - rec.new_quatation_quantity})
-
+			store=rec.blanket_order_line_id.remaining_quantity - rec.new_quatation_quantity
+			rec.blanket_order_line_id.write({'remaining_quantity':store,'quantity':store})
 
 class OrderWizline(models.TransientModel):
 	_name="orderwizline.orderwizline"

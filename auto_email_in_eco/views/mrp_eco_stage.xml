@@ -8,7 +8,7 @@
                 <field name="arch" type="xml">
                     <xpath expr="//field[@name='final_stage']" position="after">                        
                         <field name="auto_e_mail"/>  
-                        <field name="email_template" domain="[('model_id', '=','Engineering Change Order (ECO)')]" options='{"no_open": True,"no_create": 1, "no_create_edit": 1}' attrs="{'invisible': [('auto_e_mail', '!=',True)]}"/>
+                        <field name="email_template" domain="[('model_id', '=','Engineering Change Order (ECO)')]" options='{"no_open": True,"no_create": 1, "no_create_edit": 1}' attrs="{'invisible': [('auto_e_mail', '!=',True)],'required': [('auto_e_mail', '=',True)]}"/>
                     </xpath>
                 </field>
         </record>

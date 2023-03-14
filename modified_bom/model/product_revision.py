@@ -1,6 +1,7 @@
-from odoo import models, fields, api, _
+from odoo import models, fields
 
-class Product_Revisions(models.Model):
-    _inherit = 'product.revisions'
+
+class ProductRevisions(models.Model):
+    _inherit = "product.revisions"
 
     bom_version = fields.Integer(string="BOM Version")

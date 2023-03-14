@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-
         <!-- Sequences for product.template -->
         <record id="seq_product_part" model="ir.sequence">
             <field name="name">Product Part</field>

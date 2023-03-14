@@ -4,6 +4,7 @@ from datetime import datetime
 
 class RejectionReasonWizard(models.TransientModel):
     _inherit = 'sh.reject.reason.wizard'
+    _description = "Reject reason wizard"
 
     # name = fields.Char(string="Reason", required=True)
 
@@ -11,14 +12,14 @@ class RejectionReasonWizard(models.TransientModel):
 
         active_obj = self.env[self.env.context.get('active_model')].browse(
             self.env.context.get('active_id'))
-
+                
         if self.env.context.get('active_model') == 'purchase.order':
-
+            
             active_obj.write({
-                'reject_reason': self.name,
-                'reject_by': active_obj.env.user,
-                'rejection_date': datetime.now(),
-                'state': 'reject',
+            'reject_reason': self.name,
+            'reject_by': active_obj.env.user,
+            'rejection_date': datetime.now(),
+            'state': 'reject',
             })
 
             template_id = active_obj.env.ref(
@@ -30,11 +31,13 @@ class RejectionReasonWizard(models.TransientModel):
 
             notifications = []
             if active_obj.user_id:
-                notifications.append([
-                    (active_obj._cr.dbname, 'res.partner',
-                    active_obj.user_id.partner_id.id),
-                    {'type': 'user_connection', 'title': _(
-                        'Notitification'), 'message': 'Dear User!! your Purchase order %s is rejected' % (active_obj.name), 'sticky': True, 'warning': True}])
-                active_obj.env['bus.bus'].sendmany(notifications)
+            
+                notifications.append(
+                                (active_obj.user_id.partner_id, 'sh_notification_info', 
+                                {'title': _('Notitification'),
+                                'message': 'Dear User!! your Purchase order %s is rejected' % (active_obj.name)
+                                }))
+                active_obj.env['bus.bus']._sendmany(notifications)
 
         return super(RejectionReasonWizard,self).action_reject_order()
+

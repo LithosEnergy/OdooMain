@@ -57,7 +57,7 @@
         <field name="res_model">purchase.order</field>
         <field name="type">ir.actions.act_window</field>
         <field name="view_mode">tree,kanban,form,pivot,graph,calendar,activity</field>
-        <field name="view_id" ref="purchase.purchase_order_tree" />
+        <field name="view_id" ref="purchase.purchase_order_kpis_tree" />
         <field name="domain">[('state','=','waiting_for_approval')]</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face"></p>
@@ -75,7 +75,7 @@
         <field name="res_model">purchase.order</field>
         <field name="type">ir.actions.act_window</field>
         <field name="view_mode">tree,kanban,form,pivot,graph,calendar,activity</field>
-        <field name="view_id" ref="purchase.purchase_order_tree" />
+        <field name="view_id" ref="purchase.purchase_order_kpis_tree" />
         <field name="domain">[('is_boolean','=',True)]</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face"></p>

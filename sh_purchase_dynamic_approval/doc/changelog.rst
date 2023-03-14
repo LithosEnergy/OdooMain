@@ -1,17 +1,18 @@
-13.0.1 (18-05-2021)
+15.0.1 (september 10,2021)
 -------------------------
 
 - initial release
 
-13.0.2(June 24,2021)
+15.0.2 (2nd December, 2021)
 
-    Correct the file order in manifest file
+- Fix the issue of bus notification
+- [Bug Fix] Receipt is not created  when RFQ is confirmed
 
-13.0.3 (December 2,2021)
-  
-   [Bug Fix] Receipt is not created  when RFQ is confirmed
-
-13.0.4 (january 10,2021)
+15.0.3 (january 10,2021)
 -------------------------
 
 - Add dependancy of sh_base_dynamic_approval
+
+15.0.4 (15th april 2022)
+
+[update] only purchase manager can create and edit approval configuration 

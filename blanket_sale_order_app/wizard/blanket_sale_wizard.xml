@@ -12,6 +12,7 @@
                             <field name="product_id"/>
                             <field name="partner_id" required='1'/>
                             <field name="remaining_quantity"/>
+                            <field name="blanket_order_line_id" invisible='1'/>
                             <field name="new_quatation_quantity"/>
                             <field name="unit_of_measure_id" invisible='1'/>
                             <field name="unit_price" invisible='1'/>
