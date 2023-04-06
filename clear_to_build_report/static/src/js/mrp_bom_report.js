@@ -1,15 +1,15 @@
-odoo.define('clear_to_build.mrp_bom_report', function (require) {
-'use strict';
+/** @odoo-module **/
 
-var core = require('web.core');
-var framework = require('web.framework');
+
+import core from 'web.core';
+import framework from 'web.framework';
 
 var QWeb = core.qweb;
 var _t = core._t;
-var MrpBomReport = require('mrp.mrp_bom_report');
+
+import MrpBomReport from '@mrp/js/mrp_bom_report';
 
 MrpBomReport.include({
-
     get_bom: function(event) {
       var self = this;
       var $parent = $(event.currentTarget).closest('tr');
@@ -63,5 +63,4 @@ MrpBomReport.include({
         this.given_context.Warehouse = $(ev.currentTarget).val();
         this._reload();
     },
-});
 });
