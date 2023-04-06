@@ -2,7 +2,7 @@
 
 {
     "name": "Clear to Build Report",
-    "version": "15.0.0.0.0",
+    "version": "15.0.1.0.0",
     "summary": "Clear to Build Report",
     "author": "S4 Solutions, LLC",
     "website": "https://www.sfour.io/",
@@ -21,9 +21,12 @@
     "assets": {
         "web.assets_backend": [
             "clear_to_build_report/static/src/js/mrp_bom_report.js"
-        ]
+        ],
+        'web.assets_qweb': [
+            'clear_to_build_report/static/src/xml/**/*',
+        ],
     },
-    "qweb": ["static/src/xml/mrp.xml"],
+    # "qweb": ["static/src/xml/mrp.xml"],
     "installable": True,
     "application": True,
     "auto_install": False,
