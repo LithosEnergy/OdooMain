@@ -9,6 +9,7 @@
                 <xpath expr="//field[@name='company_id']" position="after">
                     <field name="component_count"/>
                 </xpath>
+                <!-- New field added for production state -->
                 <xpath expr="//field[@name='product_id']" position="after">
                     <field name="production_state_id"/>
                 </xpath>

@@ -7,6 +7,7 @@ class InheritMrpBom(models.Model):
     component_count = fields.Integer(
         string="Component Count", compute="_component_count"
     )
+    # New field added for production state
     production_state_id = fields.Many2one(
         "production.state",
         related="product_tmpl_id.production_state",
