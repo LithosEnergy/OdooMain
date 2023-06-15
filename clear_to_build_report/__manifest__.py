@@ -12,7 +12,7 @@
     """,
     "category": "mrp",
     "images": [],
-    "depends": ["base", "purchase", "mrp", "mrp_plm"],
+    "depends": ["base", "purchase", "mrp", "mrp_plm", "boms_via_plm"],
     "license" : "OPL-1",
     "data": [
         "views/stock_location_views.xml",

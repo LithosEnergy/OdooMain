@@ -52,7 +52,6 @@ class MrpEco(models.Model):
     def add_document(self):
         print("Done")
 
-    @property
     def action_apply(self):
         eco = super(MrpEco, self).action_apply()
         if self.type == "bom":
