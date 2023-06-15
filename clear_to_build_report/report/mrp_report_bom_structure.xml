@@ -25,6 +25,7 @@
                             </a>
                             <t t-else="" t-esc="data['bom_prod_name']"/>
                         </h3>
+                        <h3 t-if="data['bom'].production_state_id">Production State: <t t-esc="data['bom'].production_state_id.name"/></h3>
                         <h6 t-if="data['bom'].code">Reference: <t t-esc="data['bom'].code"/></h6>
                     </div>
                 </div>
@@ -120,6 +121,7 @@
                             </a>
                             <t t-else="" t-esc="data['bom_prod_name']"/>
                         </h3>
+                        <h4 t-if="data['bom'].production_state_id">Production State: <t t-esc="data['bom'].production_state_id.name"/></h4>
                         <h6 t-if="data['bom'].code">Reference: <t t-esc="data['bom'].code"/></h6>
                     </div>
                 </div>
@@ -231,6 +233,7 @@
                             </a>
                             <t t-else="" t-esc="data['bom_prod_name']"/>
                         </h3>
+                        <h4 t-if="data['bom'].production_state_id">Production State: <t t-esc="data['bom'].production_state_id.name"/></h4>
                         <h6 t-if="data['bom'].code">Reference: <t t-esc="data['bom'].code"/></h6>
                     </div>
                 </div>
