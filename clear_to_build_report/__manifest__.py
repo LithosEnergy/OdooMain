@@ -2,7 +2,7 @@
 
 {
     "name": "Clear to Build Report",
-    "version": "15.0.1.0.0",
+    "version": "15.0.1.0.1",
     "summary": "Clear to Build Report",
     "author": "S4 Solutions, LLC",
     "website": "https://www.sfour.io/",
@@ -12,7 +12,7 @@
     """,
     "category": "mrp",
     "images": [],
-    "depends": ["base", "purchase", "mrp", "mrp_plm"],
+    "depends": ["base", "purchase", "mrp", "mrp_plm", "boms_via_plm"],
     "license" : "OPL-1",
     "data": [
         "views/stock_location_views.xml",

@@ -25,6 +25,9 @@
                             </a>
                             <t t-else="" t-esc="data['bom_prod_name']"/>
                         </h3>
+                        <!-- PLM Production State field added in BOM Structure report -->
+                        <h3 t-if="data['bom'].production_state_id">Production State: <t t-esc="data['bom'].production_state_id.name"/></h3>
+                        <!-- End -->
                         <h6 t-if="data['bom'].code">Reference: <t t-esc="data['bom'].code"/></h6>
                     </div>
                 </div>
@@ -120,6 +123,9 @@
                             </a>
                             <t t-else="" t-esc="data['bom_prod_name']"/>
                         </h3>
+                        <!-- PLM Production State field added in BOM Structure report -->
+                        <h4 t-if="data['bom'].production_state_id">Production State: <t t-esc="data['bom'].production_state_id.name"/></h4>
+                        <!-- End -->
                         <h6 t-if="data['bom'].code">Reference: <t t-esc="data['bom'].code"/></h6>
                     </div>
                 </div>
@@ -231,6 +237,9 @@
                             </a>
                             <t t-else="" t-esc="data['bom_prod_name']"/>
                         </h3>
+                        <!-- PLM Production State field added in BOM Structure report -->
+                        <h4 t-if="data['bom'].production_state_id">Production State: <t t-esc="data['bom'].production_state_id.name"/></h4>
+                        <!-- End -->
                         <h6 t-if="data['bom'].code">Reference: <t t-esc="data['bom'].code"/></h6>
                     </div>
                 </div>
