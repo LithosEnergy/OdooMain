@@ -13,6 +13,10 @@
                 <xpath expr="//field[@name='product_id']" position="after">
                     <field name="production_state_id"/>
                 </xpath>
+                <!-- New field added for component production state -->
+                <xpath expr="//field[@name='bom_line_ids']/tree" position="inside">
+                    <field name="production_state_id" invisible="1"/>
+                </xpath>
             </field>
         </record>
     </data>
