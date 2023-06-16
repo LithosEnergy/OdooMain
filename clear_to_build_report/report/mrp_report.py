@@ -314,6 +314,7 @@ class ReportBomStructure(models.AbstractModel):
                 qty_avail = "color:red;"
             vals = {
                 "prod_id": line.product_id.id,
+                "production_state_id": line.production_state_id.name,
                 "prod_name": line.product_id.display_name,
                 "qty_available": qty_available,
                 "qty_pre_available": qty_pre_available,
@@ -392,6 +393,7 @@ class ReportBomStructure(models.AbstractModel):
                         "code": bom_line["code"],
                         "child_bom": bom_line["child_bom"],
                         "prod_id": bom_line["prod_id"],
+                        "production_state_id": bom_line["production_state_id"],
                         "qty_available": bom_line["qty_available"],
                         "is_purchase": bom_line["is_purchase"],
                         "qty_pre_available": bom_line["qty_pre_available"],
