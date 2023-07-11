@@ -93,6 +93,7 @@
                                         <td></td>
                                         <td name="td_mrp_bom_f"></td>
                                         <td name="td_on_hand_qty_f" class="o_mrp_on_hand o_hidden"></td>
+                                        <td/>
                                         <td class="text-right o_mrp_bom_qty"><span><strong>Unit Cost</strong></span></td>
                                         <td class="o_mrp_bom_qty" groups="uom.group_uom"></td>
                                         <td name="td_on_hand_qty_f" class="o_mrp_on_hand o_hidden"></td>
@@ -186,6 +187,7 @@
                                     <tr>
                                         <td></td>
                                         <td name="td_mrp_bom_f"></td>
+                                        <td/>
                                         <td class="text-right"><span><strong>Unit Cost</strong></span></td>
                                         <td groups="uom.group_uom"></td>
                                         <td t-if="data['report_structure'] != 'bom_structure'" class="o_mrp_prod_cost text-right">
@@ -301,6 +303,7 @@
                                     <tr>
                                         <td></td>
                                         <td name="td_mrp_bom_f"></td>
+                                        <td/>
                                         <td t-if="data['report_structure'] == 'clear_to_build'" name="td_on_hand_qty_f" class="o_mrp_on_hand"></td>
                                         <td class="text-right o_mrp_bom_qty"><span><strong>Unit Cost</strong></span></td>
                                         <td class="o_mrp_bom_qty" groups="uom.group_uom"></td>
