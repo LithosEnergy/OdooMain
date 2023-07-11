@@ -2,7 +2,7 @@
 
 {
     "name": "Clear to Build Report",
-    "version": "15.0.1.0.1",
+    "version": "15.0.1.1.1",
     "summary": "Clear to Build Report",
     "author": "S4 Solutions, LLC",
     "website": "https://www.sfour.io/",
