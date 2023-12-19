@@ -7,8 +7,8 @@ class DocumentWizard(models.Model):
 
     @api.onchange("item_number")
     def _get_item_numbers(self):
-        if self:
-            first_line_rec = self[0]
+        for rec in self:
+            first_line_rec = rec
             if first_line_rec.product_revisions_id:
                 for value, index in enumerate(
                     first_line_rec.product_revisions_id.document_wizard_line,
